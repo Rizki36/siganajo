@@ -7,3 +7,15 @@
 <script src="<?= base_url('assets/js/validator.min.js') ?>"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
 <script src="<?= base_url('assets/js/sweetalert2.all.min.js') ?>"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
 <script src="<?= base_url('assets/js/scripts.js') ?>"></script> <!-- Custom scripts -->
+<script>
+	<?php if (!@$header_with_bg) : ?>
+		// jQuery to collapse the navbar on scroll
+		$(window).on('scroll load', function() {
+			if ($(".navbar")?.offset()?.top > 60) {
+				$(".fixed-top").addClass("top-nav-collapse");
+			} else {
+				$(".fixed-top").removeClass("top-nav-collapse");
+			}
+		});
+	<?php endif ?>
+</script>
