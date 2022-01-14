@@ -4,6 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class MyFiles
 {
+	public static $user_path = 'assets/data/user';
 	public static $penyitaan = 'assets/data/penyitaan';
 	public static $penggeledahan = 'assets/data/penggeledahan';
 	public static $perpanjangan = 'assets/data/perpanjangan';
@@ -16,9 +17,6 @@ class MyFiles
 	 */
 	public function upload($file, $file_name, $path, $type = 'pdf', $max_size = 10000)
 	{
-
-		$this->load->helper('url');
-
 		if (!empty($file['name'])) {
 			// Set preference 
 			$config['upload_path'] = $path;
