@@ -38,7 +38,7 @@
 <!-- Customers -->
 <div class="slider-1">
 	<div class="container">
-		<marquee scrollamount="10"><?= $marquee ?></marquee>
+		<marquee scrollamount="5"><?= $marquee ?></marquee>
 	</div> <!-- end of container -->
 </div> <!-- end of slider-1 -->
 <!-- end of customers -->
