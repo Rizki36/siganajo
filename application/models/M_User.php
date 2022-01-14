@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  * M_User
+ * @property int $id
  * @property string $name
  * @property string $username
  * @property string $password
@@ -12,8 +13,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 class M_User extends MY_Model
 {
-	private $table = 'mst_person';
+	private $table = 'user';
 
+	public $id;
 	public $name;
 	public $username;
 	public $password;
@@ -34,8 +36,9 @@ class M_User extends MY_Model
 	 * @param bool $show_guard
 	 * @return $this
 	 */
-	public function format_to($data, $show_guard)
+	public function format_to($data, $show_guard = false)
 	{
+		$this->id = $data->id;
 		$this->name = $data->name;
 		$this->username = $data->username;
 		$this->origin_unit = $data->origin_unit;

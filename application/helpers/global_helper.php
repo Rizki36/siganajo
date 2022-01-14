@@ -23,3 +23,13 @@ if (!function_exists('filter_xss')) { // protect input xss
 		return protect_input_xss(escape($str));
 	}
 }
+
+if (!function_exists('setresponse')) {
+	function setresponse($code, $data = array())
+	{
+		header('content-type:application/json');
+		http_response_code($code);
+		echo json_encode($data);
+		exit;
+	}
+}

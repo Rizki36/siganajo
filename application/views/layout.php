@@ -14,14 +14,13 @@
 
 	<?php if (@$use_nav !== false) $this->load->view('layout/navigation') ?>
 
-	<?php $main ?>
-
-
+	<?= $main ?>
 
 	<?php if (@$use_footer !== false) $this->load->view('layout/footer') ?>
 
 	<?php $this->load->view('layout/script') ?>
 
+	<?= @$scripts ?>
 </body>
 
 </html>

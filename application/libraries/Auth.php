@@ -11,7 +11,7 @@ class User_Role extends Enum
 
 class Auth
 {
-	private static $secret_key_pin = 'pOn3oMhmYbg17uXkub8XbCiGSYbYeax8';
+	private static $secret_key_pin = 'pOn3oMhmYbg17uXk';
 
 	/**
 	 * has_access

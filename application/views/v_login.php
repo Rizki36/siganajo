@@ -8,19 +8,19 @@
 
 				<!-- Sign Up Form -->
 				<div class="form-container">
-					<form id="logInForm" data-toggle="validator" data-focus="false">
+					<form id="login">
 						<div class="d-flex justify-content-center mb-4 mt-3">
 							<img src="<?= base_url('assets/images/logo.png') ?>" alt="" style="height: 100px;width: auto;">
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control-input" id="i-username" required>
-							<label class="label-control" for="i-username">Username</label>
-							<div class="help-block with-errors"></div>
+							<label class="d-block text-left" for="username">Username</label>
+							<input name="username" type="text" class="form-control" id="username" required>
+							<div class="invalid-feedback"></div>
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control-input" id="i-password" required>
-							<label class="label-control" for="lpassword">Password</label>
-							<div class="help-block with-errors"></div>
+							<label class="d-block text-left" for="password">Password</label>
+							<input name="password" type="text" class="form-control" id="password" required>
+							<div class="invalid-feedback"></div>
 						</div>
 						<div class="form-group">
 							<button type="submit" class="form-control-submit-button">Masuk</button>

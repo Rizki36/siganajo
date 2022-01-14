@@ -25,7 +25,7 @@
 	/* Navbar Scripts */
 	// jQuery to collapse the navbar on scroll
 	$(window).on('scroll load', function () {
-		if ($(".navbar").offset().top > 60) {
+		if ($(".navbar")?.offset()?.top > 60) {
 			$(".fixed-top").addClass("top-nav-collapse");
 		} else {
 			$(".fixed-top").removeClass("top-nav-collapse");
@@ -176,4 +176,19 @@
 		$(this).blur();
 	});
 
+
 })(jQuery);
+
+function swal_loading(title = 'Loading...', text = 'Mohon tunggu sebentar') {
+	Swal.fire({
+		title,
+		html: text,
+		didOpen: () => {
+			Swal.showLoading()
+		}
+	})
+}
+
+function swal_close(time = 500) {
+	setTimeout(() => Swal.close(), time)
+}

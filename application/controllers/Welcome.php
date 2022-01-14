@@ -6,7 +6,7 @@ class welcome extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		// if (!Auth::has_access(User_Role::user)) exit('');
+		if (!Auth::has_access(User_Role::user)) redirect('login');
 		$this->load->model('M_Setting');
 	}
 
