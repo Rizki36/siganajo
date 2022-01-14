@@ -192,3 +192,27 @@ function swal_loading(title = 'Loading...', text = 'Mohon tunggu sebentar') {
 function swal_close(time = 500) {
 	setTimeout(() => Swal.close(), time)
 }
+
+function err_validation(error) {
+	for (var item in error) {
+		const $item = $('#' + item);
+		$item.addClass('is-invalid');
+		$item.siblings('.invalid-feedback').text(error[item]);
+	}
+}
+
+function reset_validation() {
+	$('.is-invalid').removeClass('is-invalid');
+	$('.invalid-feedback').text('');
+}
+
+function common_error(e){
+	reset_validation()
+	if (e?.responseJSON?.validation) {
+		swal_close(0);
+		err_validation(e?.responseJSON?.validation);
+		return;
+	}
+
+	return Swal.fire('Yahhh', e?.responseJSON?.msg ?? 'Terjadi kesalahan.', 'error')
+}
