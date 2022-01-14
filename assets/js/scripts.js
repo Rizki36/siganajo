@@ -207,6 +207,7 @@ function reset_validation() {
 }
 
 function common_error(e){
+	console.log(e);
 	reset_validation()
 	if (e?.responseJSON?.validation) {
 		swal_close(0);

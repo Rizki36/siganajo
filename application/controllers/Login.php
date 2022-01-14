@@ -13,7 +13,6 @@ class login extends CI_Controller
 
 	function index()
 	{
-
 		## return view when post empty
 		if (!$this->input->post()) {
 			$this->load->view('layout', [
@@ -30,42 +29,46 @@ class login extends CI_Controller
 		$this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[5]');
 
-		if ($this->form_validation->run() == TRUE) {
-			$u = filter_xss($this->input->post('username'));
-			$p = Auth::enc(filter_xss($this->input->post('password')));
+		## validation error
+		if (!$this->form_validation->run()) setresponse(400, [
+			'validation' => $this->form_validation->error_array()
+		]);
 
-			$m_user = new M_User();
-			$user = $m_user->getOne('*', ['username' => $u, 'password' => $p]);
+		$u = filter_xss($this->input->post('username'));
+		$p = Auth::enc(filter_xss($this->input->post('password')));
 
-			if ($user) {
-				$row = $user;
-				$waktu = time() + 25200;
-				$expired = 30000;
-				$row['timeout']  = ($waktu + $expired);
+		$m_user = new M_User();
+		$user = $m_user->getOne('*', ['username' => $u]);
 
-				$this->session->set_userdata($row);
-				redirect('welcome');
-			} else {
-				## user not found
-				setresponse(404, [
-					'msg' => 'User tidak ada !'
-				]);
-			}
-		} else {
-			## validatoon error
-			setresponse(400, [
-				'validation' => $this->form_validation->error_array()
-			]);
-		}
-	}
+		## user not found
+		if (!$user) setresponse(400, [
+			'msg' => 'User tidak ada !'
+		]);
 
-	function logout()
-	{
-		$this->session->sess_destroy();
-		if (@$_SESSION['role'] === 'admin') return redirect('login/admin');
-		if (@$_SESSION['role'] === 'branch') return redirect('login/branch');
-		if (@$_SESSION['role'] === 'supplier') return redirect('login/supplier');
-		if (@$_SESSION['role'] === 'reseller') return redirect('login');
-		redirect('login');
+		## file model with data
+		$m_user->fill_data($user);
+
+		## wrong password
+		if ($m_user->password !== $p) setresponse(400, [
+			'msg' => 'Password salah !'
+		]);
+		
+		## not verified
+		if ($m_user->is_verified !== 1) setresponse(400, [
+			'msg' => 'Akun belum diverifikasi !'
+		]);
+
+		$waktu = time() + 25200;
+		$expired = 30000;
+
+		## set session
+		$this->session->set_userdata([
+			'name' => $m_user->name,
+			'username' => $m_user->username,
+			'role' => User_Role::user,
+			'timeout' => $waktu + $expired
+		]);
+
+		setresponse(200, ['msg' => 'Berhasil login']);
 	}
 }

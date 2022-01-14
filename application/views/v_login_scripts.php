@@ -1,9 +1,9 @@
 <script>
 	$('#login').on('submit', function(e) {
 		e.preventDefault();
-		const formData = new FormData($(this)[0])
 
 		swal_loading()
+		const formData = new FormData($(this)[0])
 
 		$.ajax({
 			type: "POST",
@@ -14,21 +14,7 @@
 			contentType: false,
 			cache: false,
 		}).then(res => {
-
-		}).fail(e => {
-			if (e?.responseJSON?.validation) {
-				swal_close(0);
-				for (var item in e.responseJSON?.validation) {
-					const $item = $('#' + item);
-					$item.addClass('is-invalid');
-					$item.siblings('.invalid-feedback').text(e.responseJSON?.validation[item]);
-				}
-				return;
-			}
-
-			if (e?.responseJSON?.msg) return Swal.fire('Yahhh', 'User tidak ada.', 'error')
-
-			swal_close();
-		})
+			window.location.replace('<?= base_url() ?>')
+		}).fail(e => common_error(e))
 	})
 </script>
