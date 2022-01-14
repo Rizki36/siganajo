@@ -39,15 +39,29 @@ class signup extends CI_Controller
 			]);
 		}
 
+		$this->load->library('MyFiles');
+		## upload file
+		$libFiles = new MyFiles();
+		try {
+			$filename = $libFiles->upload($_FILES['file'], 'file_user_' . $_POST['username'] . '_' . time(), MyFiles::$user_path);
+		} catch (\Throwable $th) {
+			setresponse(400, ['msg' => $th->getMessage()]);
+		}
+
 		$data = [
 			'name' => filter_xss($_POST['name']),
 			'username' => filter_xss($_POST['username']),
 			'password' => Auth::enc(filter_xss($_POST['password'])),
 			'origin_unit' => filter_xss($_POST['origin_unit']),
+			'file' => $filename
 		];
 
 		$m_user = new M_User();
 		$user = $m_user->insert($data);
+
+		// TODO : create email view for new register user
+		$this->load->library('MyEmail');
+		MyEmail::send('sigenajo.pn.jombang@gmail.com', 'User Register', 'Terdapat user baru.');
 
 		if (!$user) setresponse(404, [
 			'msg' => 'User tidak ada !'
