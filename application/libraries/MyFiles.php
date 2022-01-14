@@ -12,11 +12,16 @@ class MyFiles
 	/**
 	 * upload
 	 * @param File $file
-	 * @param File $file
+	 * @param string $file_name
+	 * @param string $path
+	 * @param string $type
+	 * @param int $max_size
 	 * @return string
 	 */
-	public function upload($file, $file_name, $path, $type = 'pdf', $max_size = 10000)
+	public static function upload($file, $file_name, $path, $type = 'pdf', $max_size = 10000)
 	{
+		$CI = &get_instance();
+
 		if (!empty($file['name'])) {
 			// Set preference 
 			$config['upload_path'] = $path;
@@ -25,16 +30,16 @@ class MyFiles
 			$config['file_name'] = $file_name;
 
 			// Load upload library 
-			$this->load->library('upload', $config);
+			$CI->load->library('upload', $config);
 
 			// File upload
-			if ($this->upload->do_upload('file')) {
+			if ($CI->upload->do_upload('file')) {
 				// Get data about the file
-				$uploadData = $this->upload->data();
+				$uploadData = $CI->upload->data();
 				$filename = $uploadData['file_name'];
 				return $filename;
 			} else {
-				throw new Error($this->upload->display_errors());
+				throw new Error($CI->upload->display_errors());
 			}
 		} else {
 			throw new Error('File Kosong.');
