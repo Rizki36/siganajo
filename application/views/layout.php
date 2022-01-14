@@ -14,7 +14,9 @@
 
 	<?php if (@$use_nav !== false) $this->load->view('layout/navigation') ?>
 
-	<?= $main ?>
+	<div style="min-height: 300px;">
+		<?= $main ?>
+	</div>
 
 	<?php if (@$use_footer !== false) $this->load->view('layout/footer') ?>
 
