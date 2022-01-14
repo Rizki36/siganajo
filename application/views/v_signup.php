@@ -40,7 +40,7 @@
 								</div>
 								<div class="form-group col-12">
 									<label class="d-block text-left" for="file">File</label>
-									<input name="file" type="file" class="form-control" id="file" required>
+									<input name="file" type="file" accept=".pdf" class="form-control" id="file" required>
 									<div class="invalid-feedback"></div>
 								</div>
 								<div class="form-group col-12">
