@@ -11,17 +11,17 @@ class MyFiles
 
 	/**
 	 * upload
-	 * @param File $file
+	 * @param string $input_name
 	 * @param string $file_name
 	 * @param string $path
 	 * @param string $type
 	 * @param int $max_size
 	 * @return string
 	 */
-	public static function upload($file, $file_name, $path, $type = 'pdf', $max_size = 10000)
+	public static function upload($input_name, $file_name, $path, $type = 'pdf', $max_size = 10000)
 	{
+		$file = $_FILES[$input_name];
 		$CI = &get_instance();
-
 		if (!empty($file['name'])) {
 			// Set preference 
 			$config['upload_path'] = $path;
@@ -33,7 +33,7 @@ class MyFiles
 			$CI->load->library('upload', $config);
 
 			// File upload
-			if ($CI->upload->do_upload('file')) {
+			if ($CI->upload->do_upload($input_name)) {
 				// Get data about the file
 				$uploadData = $CI->upload->data();
 				$filename = $uploadData['file_name'];

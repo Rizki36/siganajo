@@ -43,7 +43,7 @@ class signup extends CI_Controller
 		## upload file
 		$libFiles = new MyFiles();
 		try {
-			$filename = $libFiles->upload($_FILES['file'], 'file_user_' . $_POST['username'] . '_' . time(), MyFiles::$user_path);
+			$filename = $libFiles->upload('file', 'file_user_' . $_POST['username'] . '_' . time(), MyFiles::$user_path);
 		} catch (\Throwable $th) {
 			setresponse(400, ['msg' => $th->getMessage()]);
 		}
