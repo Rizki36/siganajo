@@ -7,6 +7,8 @@
 <script src="<?= base_url('assets/js/validator.min.js') ?>"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
 <script src="<?= base_url('assets/js/sweetalert2.all.min.js') ?>"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
 <script src="<?= base_url('assets/js/jquery.steps.min.js') ?>"></script>
+<script src="<?= base_url() ?>assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url() ?>assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
 <script src="<?= base_url('assets/js/scripts.js') ?>"></script> <!-- Custom scripts -->
 <script>
 	<?php if (!@$header_with_bg) : ?>

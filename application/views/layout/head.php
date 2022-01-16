@@ -19,7 +19,8 @@
 	<link href="<?= base_url('assets/css/magnific-popup.css') ?>" rel="stylesheet">
 	<link href="<?= base_url('assets/css/jquery.steps.css') ?>" rel="stylesheet">
 	<link href="<?= base_url('assets/css/styles.css') ?>" rel="stylesheet">
-
+	<!-- <link href="<?= base_url() ?>assets/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet"> -->
+	<link href="<?= base_url() ?>assets/vendor/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Favicon  -->
 	<link rel="icon" href="images/favicon.png">
 </head>
