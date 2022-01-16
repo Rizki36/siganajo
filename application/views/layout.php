@@ -14,7 +14,7 @@
 
 	<?php if (@$use_nav !== false) $this->load->view('layout/navigation') ?>
 
-	<div style="min-height: 300px;">
+	<div style="min-height: 90vh;">
 		<?= $main ?>
 	</div>
 
