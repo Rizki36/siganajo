@@ -24,20 +24,20 @@ class MyFiles
 		$CI = &get_instance();
 		if (!empty($file['name'])) {
 			// Set preference 
+			$config = [];
 			$config['upload_path'] = $path;
 			$config['allowed_types'] = $type;
 			$config['max_size'] = $max_size; // max_size in kb 
 			$config['file_name'] = $file_name;
 
 			// Load upload library 
-			$CI->load->library('upload', $config);
+			$CI->upload->initialize($config);
 
 			// File upload
 			if ($CI->upload->do_upload($input_name)) {
 				// Get data about the file
 				$uploadData = $CI->upload->data();
-				$filename = $uploadData['file_name'];
-				return $filename;
+				return $uploadData['file_name'];
 			} else {
 				throw new Error($CI->upload->display_errors());
 			}
