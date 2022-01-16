@@ -17,6 +17,7 @@
 	<link href="<?= base_url('assets/css/fontawesome-all.css') ?>" rel="stylesheet">
 	<link href="<?= base_url('assets/css/swiper.css') ?>" rel="stylesheet">
 	<link href="<?= base_url('assets/css/magnific-popup.css') ?>" rel="stylesheet">
+	<link href="<?= base_url('assets/css/jquery.steps.css') ?>" rel="stylesheet">
 	<link href="<?= base_url('assets/css/styles.css') ?>" rel="stylesheet">
 
 	<!-- Favicon  -->
