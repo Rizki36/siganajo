@@ -6,7 +6,7 @@ class penyitaan extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		if (!Auth::has_access(User_Role::admin)) redirect('login/admin');
+		// if (!Auth::has_access(User_Role::admin)) redirect('login/admin');
 	}
 
 	public function index()
@@ -109,5 +109,34 @@ class penyitaan extends CI_Controller
 
 		unset($data['records']);
 		echo json_encode($data);
+	}
+
+	public function print($id)
+	{
+		$id = filter_xss($id);
+		$this->load->model('M_Penyitaan');
+		$m_penyitaan = new M_Penyitaan();
+
+		$data = $m_penyitaan->getOne('*', ['id_penyitaan' => $id]);
+		if (!$data) exit('Data tidak ada !');
+		$data = new Penyitaan_DTO($data);
+
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [210, 297],
+		]);
+
+		$pageNumber = 1;
+		foreach ($data->files_json as $key => $value) {
+			## check if exist file
+			if ($value == '') continue;
+
+			$mpdf->SetSourceFile(APPPATH . '../assets/data/penyitaan/' . $value . '.pdf');
+			$tplIdx = $mpdf->importPage($pageNumber);
+			$mpdf->useTemplate($tplIdx, 0, 0, 210, 297, true);
+			$mpdf->AddPage();
+		}
+
+		$mpdf->Output('out', 'I');
 	}
 }
