@@ -12,7 +12,8 @@
 	},
 	"require": {
 		"php": ">=5.3.7",
-		"myclabs/php-enum": "^1.8"
+		"myclabs/php-enum": "^1.8",
+		"vlucas/phpdotenv": "3.6"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

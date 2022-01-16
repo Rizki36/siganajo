@@ -28,6 +28,7 @@ class ComposerStaticInitdbeb7c7d901a5b0738de28b708285c9a
         'P' => 
         array (
             'Prophecy\\' => 9,
+            'PhpOption\\' => 10,
         ),
         'M' => 
         array (
@@ -35,6 +36,7 @@ class ComposerStaticInitdbeb7c7d901a5b0738de28b708285c9a
         ),
         'D' => 
         array (
+            'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
         ),
@@ -63,9 +65,17 @@ class ComposerStaticInitdbeb7c7d901a5b0738de28b708285c9a
         array (
             0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
         ),
+        'PhpOption\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
         'MyCLabs\\Enum\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
+        ),
+        'Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (
