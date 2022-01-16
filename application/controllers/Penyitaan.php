@@ -163,29 +163,32 @@ class penyitaan extends CI_Controller
 		}
 
 		$this->load->library('MyFiles');
-		$libFiles = new MyFiles();
 
-		$dataJson = [];
+		$file_json = [];
 		$time = time();
 		foreach ($inpNames as $inpName => $label) {
 			try {
-				$filename = $libFiles->upload($inpName, $time . '_' . @$_POST['username'] . '_' . $inpName, MyFiles::$penyitaan);
-				$dataJson[$inpName] = $filename;
+				$filename = MyFiles::upload($inpName, $time . '_' . @$_POST['username'] . '_' . $inpName, MyFiles::$penyitaan);
+				$file_json[$inpName] = $filename;
 			} catch (\Throwable $th) {
 				if ($inpName !== 'resume_singkat') setresponse(400, ['msg' => $label . ' : ' . $th->getMessage()]);
 			}
 		}
 
-		$dataJson = json_encode($dataJson);
 		$data = [
+			'user_id' => @$_SESSION['user_id'],
 			'nama_penyidik' => filter_xss($this->input->post('nama_penyidik')),
 			'nip_nrp' => filter_xss($this->input->post('nip_nrp')),
 			'nomor_telepon_wa' => filter_xss($this->input->post('nomor_telepon_wa')),
 			'email' => filter_xss($this->input->post('email')),
 			'polres_polsek_pengaju' => filter_xss($this->input->post('polres_polsek_pengaju')),
 			'jenis_permohonan' => filter_xss($this->input->post('jenis_permohonan')),
-			'data_json' => $dataJson
+			'files_json' => json_encode($file_json)
 		];
+
+		$this->load->model('M_Penyitaan');
+		$m_penyitaan = new M_Penyitaan();
+		$m_penyitaan->insert($data);
 
 		// TODO : create view
 		$this->load->library('MyEmail');
