@@ -52,7 +52,7 @@ class login extends CI_Controller
 		if ($m_user->password !== $p) setresponse(400, [
 			'msg' => 'Password salah !'
 		]);
-		
+
 		## not verified
 		if ($m_user->is_verified !== 1) setresponse(400, [
 			'msg' => 'Akun belum diverifikasi !'
@@ -63,6 +63,7 @@ class login extends CI_Controller
 
 		## set session
 		$this->session->set_userdata([
+			'user_id' => $m_user->id,
 			'name' => $m_user->name,
 			'username' => $m_user->username,
 			'role' => User_Role::user,
