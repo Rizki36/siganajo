@@ -1,5 +1,5 @@
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top top-nav-collapse">
     	<div class="container">
 
     		<!-- Text Logo - Use this if you don't have a graphic logo -->
@@ -17,44 +17,83 @@
 
     		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
     			<ul class="navbar-nav ml-auto">
-    				<li class="nav-item">
-    					<a class="nav-link page-scroll" href="#about">Tentang <span class="sr-only">(current)</span></a>
-    				</li>
+    				<?php if ($_SESSION['role'] === User_Role::user) : ?>
+    					<li class="nav-item">
+    						<a class="nav-link page-scroll" href="#about">Tentang <span class="sr-only">(current)</span></a>
+    					</li>
 
-    				<!-- Dropdown Menu -->
-    				<li class="nav-item dropdown">
-    					<a class="nav-link dropdown-toggle page-scroll" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">Layanan
-    					</a>
-    					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-    						<a class="dropdown-item page-scroll" href="#penyitaan">
-    							<span class="item-text">
-    								Penyitaan
-    							</span>
+    					<!-- Dropdown Menu -->
+    					<li class="nav-item dropdown">
+    						<a class="nav-link dropdown-toggle page-scroll" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">Layanan
     						</a>
-    						<div class="dropdown-items-divide-hr"></div>
-    						<a class="dropdown-item page-scroll" href="#penggeledahan">
-    							<span class="item-text">
-    								Penggeledahan
-    							</span>
-    						</a>
-    						<div class="dropdown-items-divide-hr"></div>
-    						<a class="dropdown-item page-scroll" href="#perpanjangan-penahanan">
-    							<span class="item-text">
-    								Perpanjangan Penahanan
-    							</span>
-    						</a>
-    					</div>
-    				</li>
-    				<!-- end of dropdown menu -->
+    						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    							<a class="dropdown-item page-scroll" href="#penyitaan">
+    								<span class="item-text">
+    									Penyitaan
+    								</span>
+    							</a>
+    							<div class="dropdown-items-divide-hr"></div>
+    							<a class="dropdown-item page-scroll" href="#penggeledahan">
+    								<span class="item-text">
+    									Penggeledahan
+    								</span>
+    							</a>
+    							<div class="dropdown-items-divide-hr"></div>
+    							<a class="dropdown-item page-scroll" href="#perpanjangan-penahanan">
+    								<span class="item-text">
+    									Perpanjangan Penahanan
+    								</span>
+    							</a>
+    						</div>
+    					</li>
+    					<!-- end of dropdown menu -->
 
-    				<li class="nav-item">
-    					<a class="nav-link page-scroll" href="#tutorial">Tutorial</a>
-    				</li>
+    					<li class="nav-item">
+    						<a class="nav-link page-scroll" href="#tutorial">Tutorial</a>
+    					</li>
 
-    				<li class="nav-item">
-    					<a class="nav-link page-scroll" href="#kontak">Hubungi Kami</a>
-    				</li>
+    					<li class="nav-item">
+    						<a class="nav-link page-scroll" href="#kontak">Hubungi Kami</a>
+    					</li>
+    				<?php endif ?>
+
+    				<?php if ($_SESSION['role'] === User_Role::admin) : ?>
+    					<li class="nav-item">
+    						<a class="nav-link page-scroll" href="<?= base_url('admin/welcome') ?>">Beranda <span class="sr-only">(current)</span></a>
+    					</li>
+
+    					<li class="nav-item">
+    						<a class="nav-link page-scroll" href="<?= base_url('admin/konten') ?>">Konten </a>
+    					</li>
+
+    					<!-- Dropdown Menu -->
+    					<li class="nav-item dropdown">
+    						<a class="nav-link dropdown-toggle page-scroll" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">Layanan
+    						</a>
+    						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    							<a class="dropdown-item page-scroll" href="<?= base_url('admin/penyitaan') ?>">
+    								<span class="item-text">
+    									Penyitaan
+    								</span>
+    							</a>
+    							<div class="dropdown-items-divide-hr"></div>
+    							<a class="dropdown-item page-scroll" href="<?= base_url('admin/penggeledahan') ?>">
+    								<span class="item-text">
+    									Penggeledahan
+    								</span>
+    							</a>
+    							<div class="dropdown-items-divide-hr"></div>
+    							<a class="dropdown-item page-scroll" href="<?= base_url('perpanjangan-penahanan') ?>">
+    								<span class="item-text">
+    									Perpanjangan Penahanan
+    								</span>
+    							</a>
+    						</div>
+    					</li>
+    					<!-- end of dropdown menu -->
+    				<?php endif ?>
     			</ul>
+
     			<span class="nav-item">
     				<a class="btn-outline-sm" href="<?= base_url('logout') ?>">Logout</a>
     			</span>
