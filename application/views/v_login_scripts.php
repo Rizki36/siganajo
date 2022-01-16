@@ -7,14 +7,14 @@
 
 		$.ajax({
 			type: "POST",
-			url: "<?= base_url('login') ?>",
+			url: "<?= base_url(@$is_admin ? 'login/admin' : 'login') ?>",
 			data: formData,
 			dataType: "json",
 			processData: false,
 			contentType: false,
 			cache: false,
 		}).then(res => {
-			window.location.replace('<?= base_url() ?>')
+			window.location.replace('<?= base_url(@$is_admin ? 'admin' : '') ?>')
 		}).fail(e => common_error(e))
 	})
 </script>
