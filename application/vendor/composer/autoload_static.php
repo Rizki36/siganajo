@@ -12,6 +12,10 @@ class ComposerStaticInitdbeb7c7d901a5b0738de28b708285c9a
     );
 
     public static $prefixLengthsPsr4 = array (
+        's' => 
+        array (
+            'setasign\\Fpdi\\' => 14,
+        ),
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
@@ -27,12 +31,14 @@ class ComposerStaticInitdbeb7c7d901a5b0738de28b708285c9a
         ),
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
             'Prophecy\\' => 9,
             'PhpOption\\' => 10,
         ),
         'M' => 
         array (
             'MyCLabs\\Enum\\' => 13,
+            'Mpdf\\' => 5,
         ),
         'D' => 
         array (
@@ -43,6 +49,10 @@ class ComposerStaticInitdbeb7c7d901a5b0738de28b708285c9a
     );
 
     public static $prefixDirsPsr4 = array (
+        'setasign\\Fpdi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/setasign/fpdi/src',
+        ),
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
@@ -61,6 +71,10 @@ class ComposerStaticInitdbeb7c7d901a5b0738de28b708285c9a
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
         ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
         'Prophecy\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
@@ -72,6 +86,10 @@ class ComposerStaticInitdbeb7c7d901a5b0738de28b708285c9a
         'MyCLabs\\Enum\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
+        ),
+        'Mpdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mpdf/mpdf/src',
         ),
         'Dotenv\\' => 
         array (
