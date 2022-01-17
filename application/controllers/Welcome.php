@@ -38,6 +38,7 @@ class welcome extends CI_Controller
 					'quotes' => $m_setting->getByKey('quotes'),
 					'link_tutorial_yt' => $m_setting->getByKey('quotes'),
 					'marquee' => $m_setting->getByKey('marquee'),
+					'images' => json_decode($m_setting->getByKey('images'), true) ?? []
 				],
 				true
 			)

@@ -144,11 +144,14 @@
 				<div class="slider-container">
 					<div class="swiper-container text-slider">
 						<div class="swiper-wrapper">
-							<!-- Slide -->
-							<div class="swiper-slide">
-								<img class="img-fluid" style="width: 100%; height:70vh; object-fit: cover;" src="<?= base_url('assets/') ?>images/testimonial-1.jpg" alt="alternative">
-							</div>
-							<!-- end of slide -->
+							<?php foreach ($images as $img) : ?>
+								<!-- Slide -->
+								<div class="swiper-slide">
+									<img class="img-fluid" style="width: 100%; height:70vh; object-fit: cover;" src="<?= base_url('assets/data/konten/' . $img['file_name']) ?>" alt="alternative">
+								</div>
+								<!-- end of slide -->
+							<?php endforeach ?>
+
 						</div> <!-- end of swiper-wrapper -->
 
 						<!-- Add Arrows -->
