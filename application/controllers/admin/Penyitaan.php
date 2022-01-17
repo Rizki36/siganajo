@@ -102,7 +102,7 @@ class penyitaan extends CI_Controller
 
 			$temp['aksi'] = '';
 			$temp['aksi'] .= $files;
-			$temp['aksi'] .= "<button class='btn btn-sm btn-primary'>Cetak File</button>";
+			$temp['aksi'] .= "<a href='" . base_url('admin/penyitaan/print/' . $penyelidik->id_penyitaan)  . "' class='btn btn-sm btn-primary'>Cetak File</a>";
 
 			$data['data'][] = $temp;
 		}
@@ -130,11 +130,15 @@ class penyitaan extends CI_Controller
 		foreach ($data->files_json as $key => $value) {
 			## check if exist file
 			if ($value == '') continue;
-
-			$mpdf->SetSourceFile(APPPATH . '../assets/data/penyitaan/' . $value . '.pdf');
-			$tplIdx = $mpdf->importPage($pageNumber);
-			$mpdf->useTemplate($tplIdx, 0, 0, 210, 297, true);
-			$mpdf->AddPage();
+			$path = APPPATH . '../assets/data/penyitaan/' . $value;
+			if (!file_exists($path)) continue;
+			try {
+				$mpdf->SetSourceFile($path);
+				$tplIdx = $mpdf->importPage($pageNumber);
+				$mpdf->useTemplate($tplIdx, 0, 0, 210, 297, true);
+				$mpdf->AddPage();
+			} catch (\Throwable $th) {
+			}
 		}
 
 		$mpdf->Output('out', 'I');
