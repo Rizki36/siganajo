@@ -29,4 +29,16 @@ class M_Setting extends MY_Model
 	{
 		return $this->getOne(['value'], ['key' => $key])->value ?? null;
 	}
+
+	/**
+	 * set_by_key
+	 * to get one data by key
+	 * @param string $key
+	 * @param mixed $value
+	 * @return bool
+	 */
+	public function setByKey($key, $value)
+	{
+		return $this->update(['value' => $value], ['key' => $key]);
+	}
 }
