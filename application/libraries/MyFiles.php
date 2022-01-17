@@ -4,6 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class MyFiles
 {
+	public static $konten = 'assets/data/konten';
 	public static $user_path = 'assets/data/user';
 	public static $penyitaan = 'assets/data/penyitaan';
 	public static $penggeledahan = 'assets/data/penggeledahan';
