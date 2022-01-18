@@ -53,6 +53,8 @@ class M_Penyitaan extends MY_Model
 /**
  * Penyitaan
  * to convert data from M_Penyitaan
+ * @property int $id_penyitaan
+ * @property int $user_id
  * @property string $nama_penyidik
  * @property string $nip_nrp
  * @property string $nomor_telepon_wa
@@ -60,6 +62,8 @@ class M_Penyitaan extends MY_Model
  * @property string $polres_polsek_pengaju
  * @property string $jenis_permohonan
  * @property array $files_json
+ * @property int $created_at
+ * @property bool $is_dibaca
  * 
  */
 class Penyitaan_DTO
