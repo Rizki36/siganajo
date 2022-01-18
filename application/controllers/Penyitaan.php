@@ -48,7 +48,6 @@ class penyitaan extends CI_Controller
 
 		$form1['polres_polsek_pengaju'] = ['class_container' => 'col-6', 'type' => 'select', 'options' => $optionsPolres, 'label' => 'Polres Polsek Pengaju'];
 
-
 		$optionsJenis = [
 			['value' => '', 'label' => 'Pilih Jenis Permohonan'],
 			['value' => 'Izin Penyitaan', 'label' => 'Izin Penyitaan'],
@@ -93,7 +92,7 @@ class penyitaan extends CI_Controller
 
 		$this->load->view('layout', [
 			'main' => $this->load->view(
-				'v_penyitaan',
+				'v_form',
 				[
 					'header_with_bg' => true,
 					'steps' => $steps,
@@ -103,7 +102,7 @@ class penyitaan extends CI_Controller
 				],
 				true
 			),
-			'scripts' => $this->load->view('v_penyitaan_scripts', [], true)
+			'scripts' => $this->load->view('v_form_scripts', [], true)
 		]);
 	}
 
