@@ -96,7 +96,7 @@ class penyitaan extends CI_Controller
 			$files = "";
 			if (is_array($penyelidik->files_json)) {
 				foreach ($penyelidik->files_json as $key => $val) {
-					$files .= "<div><a target='_blank' href=" . base_url(MyFiles::$penyitaan . '/' . $val) . ">" . M_Penyitaan::get_name_file($key) . "</a></div>";
+					$files .= "<div><a target='_blank' href=" . base_url(MyFiles::$penyitaan . '/' . $val) . ">" . M_Penyitaan::get_label($key) . "</a></div>";
 				}
 			}
 
@@ -113,7 +113,7 @@ class penyitaan extends CI_Controller
 
 	public function print($id)
 	{
-		$id = filter_xss($id);
+		$id = filter_xss(base64_decode($id));
 		$this->load->model('M_Penyitaan');
 		$m_penyitaan = new M_Penyitaan();
 

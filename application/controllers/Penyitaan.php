@@ -8,6 +8,7 @@ class penyitaan extends CI_Controller
 		parent::__construct();
 		$this->load->helper('form');
 		$this->load->library('form_validation');
+		$this->load->model('M_Penyitaan');
 	}
 
 	public function index()
@@ -143,35 +144,33 @@ class penyitaan extends CI_Controller
 		## upload file
 		if ($_POST['jenis_permohonan'] === 'Izin Penyitaan') {
 			$inpNames = [
-				'surat_permohonan_dari_penyidik' => 'Surat Permohonan Dari Penyidik',
-				'surat_perintah_penyitaan' => 'Surat Perintah Penyitaan',
-				'ba_penyitaan' => 'BA Penyitaan',
-				'surat_pemberitahuan_dimulainya_penyidikan' => 'Surat Pemberitahuan Dimulainya Penyidikan',
-				'resume_singkat' => 'Resume Singkat'
+				'surat_permohonan_dari_penyidik',
+				'surat_perintah_penyitaan',
+				'ba_penyitaan',
+				'surat_pemberitahuan_dimulainya_penyidikan',
+				'resume_singkat',
 			];
 		} else {
 			$inpNames = [
-				'surat_permohonan_dari_penyidik' => 'Surat Permohonan Dari Penyidik',
-				'surat_perintah_penyitaan' => 'Surat Perintah Penyitaan',
-				'laporan_polisi' => 'Laporan Polisi',
-				'surat_pemberitahuan_dimulainya_penyidikan' => 'Surat Pemberitahuan Dimulainya Penyidikan',
-				'ba_penyitaan' => 'ba_penyitaan',
-				'surat_tanda_terima_barang_bukti' => 'Surat Tanda Terima Barang Bukti',
-				'surat_perintah_penyidik' => 'Surat Perintah Penyidik',
-				'resume_singkat' => 'Resume Singkat',
+				'surat_permohonan_dari_penyidik',
+				'surat_perintah_penyitaan',
+				'laporan_polisi',
+				'surat_pemberitahuan_dimulainya_penyidikan',
+				'ba_penyitaan',
+				'surat_tanda_terima_barang_bukti',
+				'surat_perintah_penyidik',
+				'resume_singkat',
 			];
 		}
 
-		$this->load->library('MyFiles');
-
 		$file_json = [];
 		$time = time();
-		foreach ($inpNames as $inpName => $label) {
+		foreach ($inpNames as $inpName) {
 			try {
 				$filename = MyFiles::upload($inpName, $time . '_' . @$_POST['username'] . '_' . $inpName, MyFiles::$penyitaan);
 				$file_json[$inpName] = $filename;
 			} catch (\Throwable $th) {
-				if ($inpName !== 'resume_singkat') setresponse(400, ['msg' => $label . ' : ' . $th->getMessage()]);
+				if ($inpName !== 'resume_singkat') setresponse(400, ['msg' => M_Penyitaan::get_label($inpName) . ' : ' . $th->getMessage()]);
 			}
 		}
 
@@ -186,14 +185,37 @@ class penyitaan extends CI_Controller
 			'files_json' => json_encode($file_json)
 		];
 
-		$this->load->model('M_Penyitaan');
+
 		$m_penyitaan = new M_Penyitaan();
 		$m_penyitaan->insert($data);
 
-		// TODO : create view
+
+		$enc_id = base64_encode($this->db->insert_id());
 		$this->load->library('MyEmail');
-		MyEmail::send('sigenajo.pn.jombang@gmail.com', 'User Register', json_encode($data));
-		MyEmail::send($data['email'], 'Salinan Form', json_encode($data));
+
+		unset($data['user_id']);
+		unset($data['files_json']);
+
+		$body = $this->load->view('emails/v_penyitaan', [
+			'title' => 'Form Baru',
+			'text' => 'Pastikan login terlebih dahulu untuk mengakses link dibawah.',
+			'data' => $data,
+			'files' => $file_json,
+			'path' => MyFiles::$penyitaan,
+			'is_admin' => true,
+			'link' => base_url('admin/penyitaan/print/' . $enc_id)
+		], true);
+		MyEmail::send('sigenajo.pn.jombang@gmail.com', 'Form baru', $body);
+		$body = $this->load->view('emails/v_penyitaan', [
+			'title' => 'Form Baru',
+			'text' => 'Pastikan login terlebih dahulu untuk mengakses link dibawah.',
+			'data' => $data,
+			'files' => $file_json,
+			'path' => MyFiles::$penyitaan,
+			'is_admin' => false,
+			'link' => base_url('admin/penyitaan/print/' . $enc_id)
+		], true);
+		MyEmail::send($data['email'], 'Salinan Form', $body);
 
 		setresponse(200, $data);
 	}

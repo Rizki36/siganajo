@@ -43,5 +43,4 @@
 			<button @click="next()" type="button" class="btn btn-primary" x-text="curStep === <?= json_decode(count($steps)) ?> - 1 ? 'Kirim' : 'Lanjut'"></button>
 		</div>
 	</div>
-
 </div>
