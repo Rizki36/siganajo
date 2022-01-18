@@ -13,9 +13,21 @@ class M_Penyitaan extends MY_Model
 		parent::__construct($this->table);
 	}
 
-	public static function get_name_file($key)
+	public static function get_label($key)
 	{
 		switch ($key) {
+			case 'nama_penyidik':
+				return 'Nama Penyidik';
+			case 'nip_nrp':
+				return 'NIP/NRP';
+			case 'nomor_telepon_wa':
+				return 'Nomor Telepon WA';
+			case 'email':
+				return 'Email';
+			case 'polres_polsek_pengaju':
+				return 'Polres Polsek Pengaju';
+			case 'jenis_permohonan':
+				return 'Jenis Permohonan';
 			case 'surat_permohonan_dari_penyidik':
 				return 'Surat Permohonan Dari Penyidik';
 			case 'surat_perintah_penyitaan':
@@ -25,7 +37,7 @@ class M_Penyitaan extends MY_Model
 			case 'surat_pemberitahuan_dimulainya_penyidikan':
 				return 'Surat Pemberitahuan Dimulainya Penyidikan';
 			case 'ba_penyitaan':
-				return 'ba_penyitaan';
+				return 'BA Penyitaan';
 			case 'surat_tanda_terima_barang_bukti':
 				return 'Surat Tanda Terima Barang Bukti';
 			case 'surat_perintah_penyidik':
