@@ -6,7 +6,7 @@ class penyitaan extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		// if (!Auth::has_access(User_Role::admin)) redirect('login/admin');
+		if (!Auth::has_access(User_Role::admin)) redirect('login/admin');
 	}
 
 	public function index()
