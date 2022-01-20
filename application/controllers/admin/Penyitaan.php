@@ -7,6 +7,7 @@ class penyitaan extends CI_Controller
 	{
 		parent::__construct();
 		if (!Auth::has_access(User_Role::admin)) redirect('login/admin');
+		$this->load->model('M_Penyitaan');
 	}
 
 	public function index()
@@ -27,7 +28,6 @@ class penyitaan extends CI_Controller
 	{
 		$this->load->library('MyFiles');
 		$this->load->model('M_Datatables');
-		$this->load->model('M_Penyitaan');
 		$configData = $this->input->post();
 
 		## table
@@ -36,7 +36,8 @@ class penyitaan extends CI_Controller
 		## where -> has effect with total row
 		$configData['where'] = [];
 
-
+		if ($_POST['status'] === 'read') $configData['where'][] = ['is_dibaca' => 1];
+		if ($_POST['status'] === 'unread') $configData['where'][] = ['is_dibaca' => 0];
 		## join
 		// $configData['join'] = [
 		// 	[
@@ -83,26 +84,27 @@ class penyitaan extends CI_Controller
 
 		$data['data'] = [];
 		foreach ($records as $record) {
-			$penyelidik = new Penyitaan_DTO($record);
+			$penyitaan = new Penyitaan_DTO($record);
 			$temp = (array)$record;
 			$temp['no'] = ++$num_start_row;
-			$temp['created_at'] = $penyelidik->created_at;
+			$temp['created_at'] = $penyitaan->created_at;
 			$temp['penyidik'] = '';
-			$temp['penyidik'] .= "<div>Nama : $penyelidik->nama_penyidik</div>";
-			$temp['penyidik'] .= "<div>NIP/NRP : $penyelidik->nip_nrp</div>";
-			$temp['penyidik'] .= "<div>No WA : $penyelidik->nomor_telepon_wa</div>";
-			$temp['penyidik'] .= "<div>Email : $penyelidik->email</div>";
+			$temp['penyidik'] .= "<div>Nama : $penyitaan->nama_penyidik</div>";
+			$temp['penyidik'] .= "<div>NIP/NRP : $penyitaan->nip_nrp</div>";
+			$temp['penyidik'] .= "<div>No WA : $penyitaan->nomor_telepon_wa</div>";
+			$temp['penyidik'] .= "<div>Email : $penyitaan->email</div>";
 
 			$files = "";
-			if (is_array($penyelidik->files_json)) {
-				foreach ($penyelidik->files_json as $key => $val) {
+			if (is_array($penyitaan->files_json)) {
+				foreach ($penyitaan->files_json as $key => $val) {
 					$files .= "<div><a target='_blank' href=" . base_url(MyFiles::$penyitaan . '/' . $val) . ">" . M_Penyitaan::get_label($key) . "</a></div>";
 				}
 			}
+			$temp['penyidik'] .= $files;
 
 			$temp['aksi'] = '';
-			$temp['aksi'] .= $files;
-			$temp['aksi'] .= "<a href='" . base_url('admin/penyitaan/print/' . $penyelidik->id_penyitaan)  . "' class='btn btn-sm btn-primary'>Cetak File</a>";
+			$temp['aksi'] .= "<a href='" . base_url('admin/penyitaan/print/' . $penyitaan->id_penyitaan)  . "' class='btn btn-block btn-sm btn-primary'>Cetak File</a>";
+			$temp['aksi'] .= "<button onclick='mark_read($penyitaan->id_penyitaan)' class='btn btn-block btn-sm btn-primary'>Tandai <br> Sudah Dibaca</button>";
 
 			$data['data'][] = $temp;
 		}
@@ -142,5 +144,14 @@ class penyitaan extends CI_Controller
 		}
 
 		$mpdf->Output('out', 'I');
+	}
+
+	public function mark_read()
+	{
+		$m_penyitaan = new M_Penyitaan();
+		$id = filter_xss($_POST['id']);
+		$res = $m_penyitaan->update(['is_dibaca' => 1], ['id_penyitaan' => $id]);
+		if (!$res) setresponse(400, []);
+		setresponse(200, []);
 	}
 }

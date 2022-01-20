@@ -1,7 +1,24 @@
-<div class="container" style="margin-top: 120px;margin-bottom: 120px;">
+<style>
+
+</style>
+<div class="container-fluid" style="margin-top: 120px;margin-bottom: 120px;">
 	<div class="card">
 		<div class="card-body">
-			<h3 class="mb-4 text-center">List Form Penyitaan</h3>
+			<h3 class="mb-5 text-center">List Form Penyitaan</h3>
+			<div class="d-flex mb-2">
+				<input id="r-semua" type="radio" class="input-filter input-radio mr-2" name="status" value="">
+				<label for="r-semua" class="mr-3 label-radio">
+					Semua
+				</label>
+				<input id="r-read" type="radio" class="input-filter input-radio mr-2" name="status" value="read">
+				<label for="r-read" class="mr-3 label-radio">
+					Sudah Dibaca
+				</label>
+				<input id="r-unread" type="radio" class="input-filter input-radio mr-2" name="status" value="unread" checked>
+				<label for="r-unread" class="mr-3 label-radio">
+					Belum Dibaca
+				</label>
+			</div>
 			<div class="table-responsive">
 				<table id="datatable" class="table">
 					<thead class="bg-primary">

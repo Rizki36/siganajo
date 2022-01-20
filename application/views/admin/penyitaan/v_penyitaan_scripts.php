@@ -18,7 +18,9 @@
 		"ajax": {
 			"url": "<?= base_url('admin/penyitaan/get_datatable'); ?>",
 			"type": "POST",
-			"data": function(d) {}
+			"data": function(d) {
+				d.status = $("input[name='status']:checked").val();
+			}
 		},
 		columns: [
 			// 
@@ -46,4 +48,33 @@
 			},
 		],
 	});
+
+	$(".input-filter").on('change', function(e) {
+		$datatable.ajax.reload()
+	})
+
+	function mark_read(id) {
+		Swal.fire({
+			icon: 'info',
+			title: 'Apakah Anda Yakin ?',
+			text: '',
+			confirmButtonText: 'Ya',
+			cancelButtonText: 'Tidak',
+			showCancelButton: true
+		}).then(function(result) {
+			if (result.value) {
+				$.ajax({
+					type: "POST",
+					url: "<?= base_url('admin/penyitaan/mark_read') ?>",
+					data: {
+						id
+					},
+					dataType: "json",
+
+				}).then(res => {
+					$datatable.ajax.reload()
+				}).fail(e => common_error(e))
+			}
+		})
+	}
 </script>
