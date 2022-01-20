@@ -1,4 +1,4 @@
-<div class="row justify-content-center" style="margin-top: 80px;">
+<div class="row justify-content-center" style="margin-top: 80px;margin-bottom: 80px;">
 	<div class="col-8">
 		<div x-data="init()" class="content">
 			<div class="mb-4">
@@ -21,6 +21,8 @@
 																	<option value="<?= $opt['value'] ?>"><?= $opt['label'] ?></option>
 																<?php endforeach ?>
 															</select>
+														<?php elseif ($item['type'] === 'heading') : ?>
+															<h4><?= $item['text'] ?></h4>
 														<?php else : ?>
 															<label class="d-block text-left" for="<?= $key ?>"><?= $item['label'] ?></label>
 															<input title="<?= $item['label'] ?>" name="<?= $key ?>" type="<?= $item['type'] ?>" class="<?= $item['type'] === 'file' ? '' : 'form-control' ?>" id="<?= $key ?>" <?php if (isset($item['attr'])) foreach ($item['attr'] as $keyAttr => $attr) : ?> <?= is_numeric($keyAttr) ? $attr : $keyAttr . '="' .	$attr . '"' ?> <?php endforeach ?>>

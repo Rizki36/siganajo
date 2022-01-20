@@ -2,6 +2,7 @@
 
 <script>
 	$(window).scrollTop()
+
 	function init() {
 		return {
 			curStep: 0,
@@ -18,10 +19,12 @@
 						let formData = new FormData($form[0])
 						if ($form.length) {
 							if (this.curStep + 1 === this.totalStep) {
-								$.each($('.my-form')[0], function(index, el) {
-									const $el = $(el)
-									formData.append($el.attr('name'), $el.val())
-								})
+								<?php for ($i = 0; $i < json_decode(count($steps)) - 1; $i++) : ?>
+									$.each($('.my-form')[<?= json_decode($i) ?>], function(index, el) {
+										const $el = $(el)
+										formData.append($el.attr('name'), $el.val())
+									})
+								<?php endfor ?>
 								$.each($('.my-form')[this.totalStep - 1], function(index, el) {
 									const $el = $(el)
 									if ($el.attr('type') === 'file' && $el.prop('required') && $el.get(0).files.length === 0) {
