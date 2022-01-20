@@ -45,16 +45,15 @@ class login extends CI_Controller
 			'msg' => 'User tidak ada !'
 		]);
 
-		## file model with data
-		$m_user->fill_data($user);
+		$user = new User_DTO($user);
 
 		## wrong password
-		if ($m_user->password !== $p) setresponse(400, [
+		if ($user->password !== $p) setresponse(400, [
 			'msg' => 'Password salah !'
 		]);
 
 		## not verified
-		if ($m_user->is_verified !== 1) setresponse(400, [
+		if (!$user->is_verified) setresponse(400, [
 			'msg' => 'Akun belum diverifikasi !'
 		]);
 
@@ -63,9 +62,9 @@ class login extends CI_Controller
 
 		## set session
 		$this->session->set_userdata([
-			'user_id' => $m_user->id,
-			'name' => $m_user->name,
-			'username' => $m_user->username,
+			'user_id' => $user->id,
+			'name' => $user->name,
+			'username' => $user->username,
 			'role' => User_Role::user,
 			'timeout' => $waktu + $expired
 		]);
