@@ -59,13 +59,16 @@ class signup extends CI_Controller
 		$m_user = new M_User();
 		$user = $m_user->insert($data);
 
-		// TODO : create email view for new register user
-		$this->load->library('MyEmail');
-		MyEmail::send('sigenajo.pn.jombang@gmail.com', 'User Register', 'Terdapat user baru.');
-
 		if (!$user) setresponse(404, [
-			'msg' => 'User tidak ada !'
+			'msg' => 'Gagal membuat akun !'
 		]);
+
+		$this->load->library('MyEmail');;
+		MyEmail::send('sigenajo.pn.jombang@gmail.com', 'User Register', $this->load->view('emails/v_register', [
+			'name' => $data['name'],
+			'origin_unit' => $data['origin_unit'],
+			'link' => base_url('admin/users/' .  $this->db->insert_id())
+		], true));
 
 		setresponse(200, [
 			'msg' => 'Akun berhasil dibuat. Hubungi admin untuk konfirmasi akun.'
