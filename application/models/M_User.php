@@ -23,6 +23,16 @@ class M_User extends MY_Model
 	}
 
 	/**
+	 *
+	 * @param bool $is_verified
+	 * @return int
+	 */
+	public function get_count_verified($is_verified)
+	{
+		return $this->getOne('count(id) jml', ['is_verified' => $is_verified ? 1 : 0])->jml ?? 0;
+	}
+
+	/**
 	 * getData
 	 * 
 	 * Use it instead get()

@@ -61,7 +61,9 @@
     					<li class="nav-item">
     						<a class="nav-link page-scroll" href="<?= base_url('admin/welcome') ?>">Beranda <span class="sr-only">(current)</span></a>
     					</li>
-
+    					<li class="nav-item">
+    						<a class="nav-link page-scroll" href="<?= base_url('admin/users') ?>">User</a>
+    					</li>
     					<li class="nav-item">
     						<a class="nav-link page-scroll" href="<?= base_url('admin/konten') ?>">Konten </a>
     					</li>
