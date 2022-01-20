@@ -24,9 +24,7 @@
 						</div>
 						<div class="form-group">
 							<button type="submit" class="form-control-submit-button">Masuk</button>
-						</div>
-						<div class="form-message">
-							<div id="lmsgSubmit" class="h3 text-center hidden"></div>
+							<a class="d-block mt-2" href="<?= base_url('signup') ?>" style="text-decoration: none;">Daftar</a>
 						</div>
 					</form>
 				</div> <!-- end of form container -->
