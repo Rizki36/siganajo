@@ -33,3 +33,9 @@ if (!function_exists('setresponse')) {
 		exit;
 	}
 }
+if (!function_exists('redirect_back')) {
+	function redirect_back()
+	{
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+}
