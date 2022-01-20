@@ -103,7 +103,7 @@ class penyitaan extends CI_Controller
 			$temp['penyidik'] .= $files;
 
 			$temp['aksi'] = '';
-			$temp['aksi'] .= "<a href='" . base_url('admin/penyitaan/print/' . $penyitaan->id_penyitaan)  . "' class='btn btn-block btn-sm btn-primary'>Cetak File</a>";
+			$temp['aksi'] .= "<a href='" . base_url('admin/penyitaan/print/' . base64_encode($penyitaan->id_penyitaan))  . "' class='btn btn-block btn-sm btn-primary'>Cetak File</a>";
 			$temp['aksi'] .= "<button onclick='mark_read($penyitaan->id_penyitaan)' class='btn btn-block btn-sm btn-primary'>Tandai <br> Sudah Dibaca</button>";
 
 			$data['data'][] = $temp;
@@ -128,17 +128,18 @@ class penyitaan extends CI_Controller
 			'format' => [210, 297],
 		]);
 
-		$pageNumber = 1;
 		foreach ($data->files_json as $key => $value) {
 			## check if exist file
 			if ($value == '') continue;
 			$path = APPPATH . '../assets/data/penyitaan/' . $value;
 			if (!file_exists($path)) continue;
 			try {
-				$mpdf->SetSourceFile($path);
-				$tplIdx = $mpdf->importPage($pageNumber);
-				$mpdf->useTemplate($tplIdx, 0, 0, 210, 297, true);
-				$mpdf->AddPage();
+				$pageCount = $mpdf->SetSourceFile($path);
+				for ($i = 1; $i <= $pageCount; $i++) {
+					$tplIdx = $mpdf->importPage($i, '/MediaBox');
+					$mpdf->useTemplate($tplIdx, 0, 0, 210, 297, true);
+					$mpdf->AddPage();
+				}
 			} catch (\Throwable $th) {
 			}
 		}
