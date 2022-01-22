@@ -16,7 +16,8 @@ class users extends CI_Controller
 			'main' => $this->load->view(
 				'admin/users/v_users',
 				[
-					'header_with_bg' => true
+					'header_with_bg' => true,
+					's' => @$_GET['s'] ?? 'unverified'
 				],
 				true
 			),
@@ -29,13 +30,24 @@ class users extends CI_Controller
 		$this->load->library('MyFiles');
 		$this->load->model('M_Datatables');
 		$configData = $this->input->post();
-
+		$s = filter_xss($_POST['status']);
 		## table
 		$configData['table'] = 'user';
 
 		## where -> has effect with total row
 		$configData['where'] = [];
 
+		if ($s === 'unverified') {
+			$configData['where'][] = [
+				'is_verified' => 0
+			];
+		}
+
+		if ($s === 'verified') {
+			$configData['where'][] = [
+				'is_verified' => 1
+			];
+		}
 
 		## join
 		// $configData['join'] = [

@@ -18,7 +18,9 @@
 		"ajax": {
 			"url": "<?= base_url('admin/users/get_datatable'); ?>",
 			"type": "POST",
-			"data": function(d) {}
+			"data": function(d) {
+				d.status = $("input[name='status']:checked").val();
+			}
 		},
 		columns: [
 			// 
@@ -43,6 +45,10 @@
 			},
 		],
 	});
+
+	$(".input-filter").on('change', function(e) {
+		$datatable.ajax.reload()
+	})
 
 	function hapus(id) {
 		Swal.fire({
