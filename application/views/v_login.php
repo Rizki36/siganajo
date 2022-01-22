@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1>Selamat Datang</h1>
-				<p>Di aplikasi sigampang </p>
+				<p>Di aplikasi sigenajo </p>
 
 				<!-- Sign Up Form -->
 				<div class="form-container">
@@ -19,12 +19,14 @@
 						</div>
 						<div class="form-group">
 							<label class="d-block text-left" for="password">Password</label>
-							<input name="password" type="text" class="form-control" id="password" required>
+							<input name="password" type="password" class="form-control" id="password" required>
 							<div class="invalid-feedback"></div>
 						</div>
 						<div class="form-group">
 							<button type="submit" class="form-control-submit-button">Masuk</button>
-							<a class="d-block mt-2" href="<?= base_url('signup') ?>" style="text-decoration: none;">Daftar</a>
+							<?php if (@$is_admin !== true) : ?>
+								<a class="d-block mt-2" href="<?= base_url('signup') ?>" style="text-decoration: none;">Daftar</a>
+							<?php endif ?>
 						</div>
 					</form>
 				</div> <!-- end of form container -->

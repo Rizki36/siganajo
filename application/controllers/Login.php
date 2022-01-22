@@ -78,11 +78,11 @@ class login extends CI_Controller
 		if (!$this->input->post()) {
 			$this->load->view('layout', [
 				'use_nav' => false,
-				'main' => $this->load->view('v_login', [], true),
+				'main' => $this->load->view('v_login', [
+					'is_admin' => true,
+				], true),
 				'use_footer' => false,
-				'scripts' => $this->load->view('v_login_scripts', [
-					'is_admin' => true
-				], true)
+				'scripts' => $this->load->view('v_login_scripts', [], true)
 			]);
 
 			return;
@@ -98,8 +98,17 @@ class login extends CI_Controller
 			'validation' => $this->form_validation->error_array()
 		]);
 
+
 		$u = filter_xss($this->input->post('username'));
-		$p = Auth::enc(filter_xss($this->input->post('password')));
+		$p = filter_xss($this->input->post('password'));
+
+		if ($u !== 'admin') setresponse(400, [
+			'msg' => 'User salah !'
+		]);
+
+		if ($p !== 'Sigenajo2022') setresponse(400, [
+			'msg' => 'Password salah !'
+		]);
 
 		$waktu = time() + 25200;
 		$expired = 30000;
