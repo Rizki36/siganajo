@@ -13,6 +13,17 @@ class M_Perpanjangan extends MY_Model
 		parent::__construct($this->table);
 	}
 
+	/**
+	 * get_count_read
+	 *
+	 * @param bool $is_dibaca
+	 * @return int
+	 */
+	public function get_count_read($is_dibaca)
+	{
+		return $this->getOne('count(id_perpanjangan) as jml', ['is_dibaca' => $is_dibaca ? 1 : 0])->jml ?? 0;
+	}
+
 	public static function get_label($key)
 	{
 		switch ($key) {
@@ -119,10 +130,10 @@ class Perpanjangan_DTO
 	public $tempat_lahir;
 	public $tanggal_lahir;
 	public $jenis_kelamin;
-	public $kebangsaan;
 	public $tempat_tinggal;
-	public $agama;
 	public $pekerjaan;
+	public $agama;
+	public $kebangsaan;
 
 	public $files_json;
 	public $created_at;
@@ -133,7 +144,6 @@ class Perpanjangan_DTO
 		$this->id_perpanjangan = @$data->id_perpanjangan;
 		$this->user_id = @$data->user_id;
 
-		$this->nama_penyidik = @$data->nama_penyidik;
 		$this->tgl_surat = @$data->tgl_surat;
 		$this->nomor_surat = @$data->nomor_surat;
 		$this->alasan_perpanjangan = @$data->alasan_perpanjangan;
@@ -147,10 +157,10 @@ class Perpanjangan_DTO
 		$this->tempat_lahir = @$data->tempat_lahir;
 		$this->tanggal_lahir = @$data->tanggal_lahir;
 		$this->jenis_kelamin = @$data->jenis_kelamin;
-		$this->kebangsaan = @$data->kebangsaan;
 		$this->tempat_tinggal = @$data->tempat_tinggal;
-		$this->agama = @$data->agama;
 		$this->pekerjaan = @$data->pekerjaan;
+		$this->agama = @$data->agama;
+		$this->kebangsaan = @$data->kebangsaan;
 
 		$this->files_json = json_decode(@$data->files_json, true);
 

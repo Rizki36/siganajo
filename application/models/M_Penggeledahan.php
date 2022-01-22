@@ -13,6 +13,17 @@ class M_Penggeledahan extends MY_Model
 		parent::__construct($this->table);
 	}
 
+	/**
+	 * get_count_read
+	 *
+	 * @param bool $is_dibaca
+	 * @return int
+	 */
+	public function get_count_read($is_dibaca)
+	{
+		return $this->getOne('count(id_penggeledahan) as jml', ['is_dibaca' => $is_dibaca ? 1 : 0])->jml ?? 0;
+	}
+
 	public static function get_label($key)
 	{
 		switch ($key) {
