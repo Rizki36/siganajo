@@ -147,7 +147,7 @@
 							<?php foreach ($images as $img) : ?>
 								<!-- Slide -->
 								<div class="swiper-slide">
-									<img class="img-fluid" style="width: 100%; height:70vh; object-fit: cover;" src="<?= base_url('assets/data/konten/' . $img['file_name']) ?>" alt="alternative">
+									<img class="img-fluid" style="width: 100%; min-height:70vh; object-fit: cover;" src="<?= base_url('assets/data/konten/' . $img['file_name']) ?>" alt="Konten">
 								</div>
 								<!-- end of slide -->
 							<?php endforeach ?>
