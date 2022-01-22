@@ -13,9 +13,20 @@
 										<template <?php if (isset($form['template_attr'])) foreach ($form['template_attr'] as $keyTempAtt => $tempAttr) : ?> <?= $keyTempAtt . '="' .	$tempAttr . '"' ?> <?php endforeach ?>>
 											<div class="row">
 												<?php foreach ($form['input'] as $key => $item) : ?>
+													<?php
+													$is_required = false;
+													if (isset($item['attr'])) {
+														foreach ($item['attr'] as $keyAttr => $attr) {
+															if ($attr === 'required') {
+																$is_required = true;
+															}
+														}
+													}
+													$txt_required = $is_required ? '<span class="text-danger">*</span>' : '';
+													?>
 													<div class="form-group <?= @$item['class_container'] ?>">
 														<?php if ($item['type'] === 'select') : ?>
-															<label class="d-block text-left" for="<?= $key ?>"><?= $item['label'] ?></label>
+															<label class="d-block text-left" for="<?= $key ?>"><?= $item['label'] ?> <?= $txt_required ?></label>
 															<select class="form-control" name="<?= $key ?>" id="<?= $key ?>" <?php if (isset($item['attr'])) foreach ($item['attr'] as $keyAttr => $attr) : ?> <?= is_numeric($keyAttr) ? $attr : $keyAttr . '="' .	$attr . '"' ?> <?php endforeach ?>>
 																<?php foreach ($item['options'] as $opt) : ?>
 																	<option value="<?= $opt['value'] ?>"><?= $opt['label'] ?></option>
@@ -24,7 +35,7 @@
 														<?php elseif ($item['type'] === 'heading') : ?>
 															<h4><?= $item['text'] ?></h4>
 														<?php else : ?>
-															<label class="d-block text-left" for="<?= $key ?>"><?= $item['label'] ?></label>
+															<label class="d-block text-left" for="<?= $key ?>"><?= $item['label'] ?> <?= $txt_required ?></label>
 															<input title="<?= $item['label'] ?>" name="<?= $key ?>" type="<?= $item['type'] ?>" class="<?= $item['type'] === 'file' ? '' : 'form-control' ?>" id="<?= $key ?>" <?php if (isset($item['attr'])) foreach ($item['attr'] as $keyAttr => $attr) : ?> <?= is_numeric($keyAttr) ? $attr : $keyAttr . '="' .	$attr . '"' ?> <?php endforeach ?>>
 															<div class="invalid-feedback"></div>
 														<?php endif ?>

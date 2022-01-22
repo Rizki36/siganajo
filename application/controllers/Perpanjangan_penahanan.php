@@ -13,17 +13,17 @@ class perpanjangan_penahanan extends CI_Controller
 
 	public function index()
 	{
-		$step1Form['title'] = ['class_container' => 'col-12', 'type' => 'heading', 'text' => 'PENDAFTARAN PERPANJANGAN PENAHANAN'];
-		$step1Form['tgl_surat'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Tanggal Surat Permohonan'];
-		$step1Form['nomor_surat'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Nomor Surat Perintah Perpanjangan Penahanan'];
-		$step1Form['alasan_perpanjangan'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Alasan Perpanjangan Penahanan'];
+		$step1Form['title'] = ['class_container' => 'col-12', 'type' => 'heading', 'text' => 'PENDAFTARAN PERPANJANGAN PENAHANAN', 'attr' => ['required']];
+		$step1Form['tgl_surat'] = ['class_container' => 'col-6', 'type' => 'date', 'label' => 'Tanggal Surat Permohonan', 'attr' => ['required']];
+		$step1Form['nomor_surat'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Nomor Surat Perintah Perpanjangan Penahanan', 'attr' => ['required']];
+		$step1Form['alasan_perpanjangan'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Alasan Perpanjangan Penahanan', 'attr' => ['required']];
 
-		$step1Form['nama_penyidik'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Nama Penyidik'];
-		$step1Form['nip_nrp'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'NIP/NRP'];
-		$step1Form['nomor_telepon_wa'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Nomor Telepon Wa'];
-		$step1Form['email'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Email'];
+		$step1Form['nama_penyidik'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Nama Penyidik', 'attr' => ['required']];
+		$step1Form['nip_nrp'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'NIP/NRP', 'attr' => ['required']];
+		$step1Form['nomor_telepon_wa'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Nomor Telepon Wa', 'attr' => ['required']];
+		$step1Form['email'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Email', 'attr' => ['required']];
 
-		$step1Form['tanggal_ba'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Tanggal BA Perpanjangan Penahanan'];
+		$step1Form['tanggal_ba'] = ['class_container' => 'col-6', 'type' => 'date', 'label' => 'Tanggal BA Perpanjangan Penahanan', 'attr' => ['required']];
 
 		$step1Form['polres_polsek_pengaju'] = [
 			'class_container' => 'col-6', 'type' => 'select', 'label' => 'Polres Polsek Pengaju',
@@ -55,22 +55,25 @@ class perpanjangan_penahanan extends CI_Controller
 				['value' => 'Posek Perak', 'label' => 'Posek Perak'],
 				['value' => 'Mabes Polri/Polda/Kejaksaan/Penyidik PNS', 'label' => 'Mabes Polri/Polda/Kejaksaan/Penyidik PNS'],
 				['value' => 'Lain-lain', 'label' => 'Lain-lain'],
-			]
+			],
+			'attr' => ['required']
 		];
 
-		$step1Form['nama_pihak'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => M_Perpanjangan::get_label('nama_pihak')];
-		$step1Form['tempat_lahir'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => M_Perpanjangan::get_label('tempat_lahir')];
-		$step1Form['tanggal_lahir'] = ['class_container' => 'col-6', 'type' => 'date', 'label' => M_Perpanjangan::get_label('tanggal_lahir')];
+		$step1Form['heading_pihak'] = ['class_container' => 'col-12 mt-5', 'type' => 'heading', 'text' => 'DATA PIHAK', 'attr' => ['required']];
+		$step1Form['nama_pihak'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => M_Perpanjangan::get_label('nama_pihak'), 'attr' => ['required']];
+		$step1Form['tempat_lahir'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => M_Perpanjangan::get_label('tempat_lahir'), 'attr' => ['required']];
+		$step1Form['tanggal_lahir'] = ['class_container' => 'col-6', 'type' => 'date', 'label' => M_Perpanjangan::get_label('tanggal_lahir'), 'attr' => ['required']];
 		$step1Form['jenis_kelamin'] = [
 			'class_container' => 'col-6', 'type' => 'select', 'label' => M_Perpanjangan::get_label('jenis_kelamin'),
 			'options' => [
 				['value' => '', 'label' => 'Jenis Kelamin'],
 				['value' => 'Laki-Laki', 'label' => 'Laki-Laki'],
 				['value' => 'Perempuan', 'label' => 'Perempuan'],
-			]
+			],
+			'attr' => ['required']
 		];
-		$step1Form['kebangsaan'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => M_Perpanjangan::get_label('kebangsaan')];
-		$step1Form['tempat_tinggal'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => M_Perpanjangan::get_label('tempat_tinggal')];
+		$step1Form['kebangsaan'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => M_Perpanjangan::get_label('kebangsaan'), 'attr' => ['required']];
+		$step1Form['tempat_tinggal'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => M_Perpanjangan::get_label('tempat_tinggal'), 'attr' => ['required']];
 		$step1Form['agama'] = [
 			'class_container' => 'col-6', 'type' => 'text', 'label' => M_Perpanjangan::get_label('agama'),
 			'options' => [
@@ -82,9 +85,10 @@ class perpanjangan_penahanan extends CI_Controller
 				['value' => 'Hindu', 'label' => 'Hindu'],
 				['value' => 'Kong Hu Chu', 'label' => 'Kong Hu Chu'],
 				['value' => 'Lainnya', 'label' => 'Lainnya'],
-			]
+			],
+			'attr' => ['required']
 		];
-		$step1Form['pekerjaan'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => M_Perpanjangan::get_label('pekerjaan')];
+		$step1Form['pekerjaan'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => M_Perpanjangan::get_label('pekerjaan'), 'attr' => ['required']];
 
 		$steps['penyidik']['forms']['step2Form']['input'] = $step1Form;
 		$steps['penyidik']['forms']['step2Form']['template_attr'] = ['x-if' => 'true'];
@@ -102,7 +106,7 @@ class perpanjangan_penahanan extends CI_Controller
 		$step2Form['resume_singkat'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => M_Perpanjangan::get_label('resume_singkat'), 'attr' => ['accept' => ".pdf"]];
 		$steps['berkas']['forms']['step2Form']['input'] = $step2Form;
 		$steps['berkas']['forms']['step2Form']['template_attr'] = ['x-if' => "true"];
-		$steps['berkas']['validation_link'] = base_url('penggeledahan/validation_berkas');
+		$steps['berkas']['validation_link'] = base_url('perpanjangan_penahanan/validation_berkas');
 		$steps['berkas']['name'] = 'Data Berkas';
 
 		$this->load->view('layout', [
@@ -121,28 +125,22 @@ class perpanjangan_penahanan extends CI_Controller
 		]);
 	}
 
-	public function validation_penyidik()
+	public function validation_first()
 	{
 		## validation rule
-		$this->form_validation->set_rules('tgl_surat', M_Perpanjangan::get_label('tgl_surat'), 'trim|required|min_length[3]');
-		$this->form_validation->set_rules('nomor_surat', M_Perpanjangan::get_label('nomor_surat'), 'trim|required|min_length[3]');
-		$this->form_validation->set_rules('alasan_perpanjangan', M_Perpanjangan::get_label('alasan_perpanjangan'), 'trim|required|min_length[3]');
+		$this->form_validation->set_rules('tgl_surat', M_Perpanjangan::get_label('tgl_surat'), 'trim|required');
 		$this->form_validation->set_rules('nama_penyidik', M_Perpanjangan::get_label('nama_penyidik'), 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('nip_nrp', M_Perpanjangan::get_label('nip_nrp'), 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('nomor_telepon_wa', M_Perpanjangan::get_label('nomor_telepon_wa'), 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('email', M_Perpanjangan::get_label('email'), 'trim|required|min_length[3]');
-		$this->form_validation->set_rules('polres_polsek_pengaju', M_Perpanjangan::get_label('polres_polsek_pengaju'), 'trim|required|min_length[3]');
-		$this->form_validation->set_rules('tanggal_ba', M_Perpanjangan::get_label('polres_polsek_pengaju'), 'trim|required|min_length[3]');
-
 		$this->form_validation->set_rules('nama_pihak', M_Perpanjangan::get_label('nama_pihak'), 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('tempat_lahir', M_Perpanjangan::get_label('tempat_lahir'), 'trim|required|min_length[3]');
-		$this->form_validation->set_rules('tanggal_lahir', M_Perpanjangan::get_label('tanggal_lahir'), 'trim|required|min_length[3]');
+		$this->form_validation->set_rules('tanggal_lahir', M_Perpanjangan::get_label('tanggal_lahir'), 'trim|required');
 		$this->form_validation->set_rules('jenis_kelamin', M_Perpanjangan::get_label('jenis_kelamin'), 'trim|required|min_length[3]');
-		$this->form_validation->set_rules('kebangsaan', M_Perpanjangan::get_label('kebangsaan'), 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('tempat_tinggal', M_Perpanjangan::get_label('tempat_tinggal'), 'trim|required|min_length[3]');
-		$this->form_validation->set_rules('agama', M_Perpanjangan::get_label('agama'), 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('pekerjaan', M_Perpanjangan::get_label('pekerjaan'), 'trim|required|min_length[3]');
-
+		$this->form_validation->set_rules('agama', M_Perpanjangan::get_label('agama'), 'trim|required|min_length[3]');
+		$this->form_validation->set_rules('kebangsaan', M_Perpanjangan::get_label('kebangsaan'), 'trim|required|min_length[3]');
 
 		## validatoon error
 		if (!$this->form_validation->run()) {
@@ -180,12 +178,19 @@ class perpanjangan_penahanan extends CI_Controller
 
 		$data = [
 			'user_id' => @$_SESSION['user_id'],
-			'nama_penyidik' => filter_xss($this->input->post('nama_penyidik')),
-			'nip_nrp' => filter_xss($this->input->post('nip_nrp')),
-			'nomor_telepon_wa' => filter_xss($this->input->post('nomor_telepon_wa')),
-			'email' => filter_xss($this->input->post('email')),
-			'polres_polsek_pengaju' => filter_xss($this->input->post('polres_polsek_pengaju')),
-			'jenis_permohonan' => filter_xss($this->input->post('jenis_permohonan')),
+			'tgl_surat' => filter_xss(@$_POST['tgl_surat']),
+			'nama_penyidik' => filter_xss(@$_POST['nama_penyidik']),
+			'nip_nrp' => filter_xss(@$_POST['nip_nrp']),
+			'nomor_telepon_wa' => filter_xss(@$_POST['nomor_telepon_wa']),
+			'email' => filter_xss(@$_POST['email']),
+			'nama_pihak' => filter_xss(@$_POST['nama_pihak']),
+			'tempat_lahir' => filter_xss(@$_POST['tempat_lahir']),
+			'tanggal_lahir' => filter_xss(@$_POST['tanggal_lahir']),
+			'jenis_kelamin' => filter_xss(@$_POST['jenis_kelamin']),
+			'tempat_tinggal' => filter_xss(@$_POST['tempat_tinggal']),
+			'pekerjaan' => filter_xss(@$_POST['pekerjaan']),
+			'agama' => filter_xss(@$_POST['agama']),
+			'kebangsaan' => filter_xss(@$_POST['kebangsaan']),
 			'files_json' => json_encode($file_json)
 		];
 
@@ -205,9 +210,9 @@ class perpanjangan_penahanan extends CI_Controller
 			'text' => 'Pastikan login terlebih dahulu untuk mengakses link dibawah.',
 			'data' => $data,
 			'files' => $file_json,
-			'path' => MyFiles::$penggeledahan,
+			'path' => MyFiles::$perpanjangan,
 			'is_admin' => true,
-			'link' => base_url('admin/penggeledahan/print/' . $enc_id)
+			'link' => base_url('admin/perpanjangan-penahanan/print/' . $enc_id)
 		], true);
 		MyEmail::send('sigenajo.pn.jombang@gmail.com', 'Form baru', $body);
 		$body = $this->load->view('emails/v_perpanjangan', [
@@ -215,9 +220,9 @@ class perpanjangan_penahanan extends CI_Controller
 			'text' => 'Pastikan login terlebih dahulu untuk mengakses link dibawah.',
 			'data' => $data,
 			'files' => $file_json,
-			'path' => MyFiles::$penggeledahan,
+			'path' => MyFiles::$perpanjangan,
 			'is_admin' => false,
-			'link' => base_url('admin/penggeledahan/print/' . $enc_id)
+			'link' => base_url('admin/perpanjangan-penahanan/print/' . $enc_id)
 		], true);
 		MyEmail::send($data['email'], 'Salinan Form', $body);
 
