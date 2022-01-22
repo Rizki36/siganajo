@@ -6,10 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<!-- SEO Meta Tags -->
-	<meta name="description" content="Siganajo">
+	<meta name="description" content="Sigenajo">
 
 	<!-- Website Title -->
-	<title>Siganajo</title>
+	<title>Sigenajo</title>
 
 	<!-- Styles -->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
