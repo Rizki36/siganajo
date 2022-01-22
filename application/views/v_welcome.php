@@ -5,8 +5,8 @@
 			<div class="row">
 				<div class="col-lg-6 col-xl-5">
 					<div class="text-container">
-						<h1>SIGANAJO</h1>
-						<p class="p-large"><?= $redaksi['utama'] ?></p>
+						<h1>SIGENAJO</h1>
+						<p class="p-large"><?= nl2br($redaksi['utama']) ?></p>
 					</div> <!-- end of text-container -->
 				</div> <!-- end of col -->
 				<div class="col-lg-6 col-xl-7">
@@ -56,7 +56,7 @@
 			<div class="col-lg-6">
 				<div class="text-container">
 					<h2>Penyitaan</h2>
-					<p><?= $redaksi['penyitaan'] ?></p>
+					<p><?= nl2br($redaksi['penyitaan'], true) ?></p>
 					<a class="btn-solid-reg" href="<?= base_url('penyitaan') ?>">Isi Formulir</a>
 				</div> <!-- end of text-container -->
 			</div> <!-- end of col -->
@@ -72,7 +72,7 @@
 			<div class="col-lg-6">
 				<div class="text-container">
 					<h2>Penggeledahan</h2>
-					<p><?= $redaksi['penggeledahan'] ?></p>
+					<p><?= nl2br($redaksi['penggeledahan']) ?></p>
 					<a class="btn-solid-reg" href="<?= base_url('penggeledahan') ?>">Isi Formulir</a>
 				</div> <!-- end of text-container -->
 			</div> <!-- end of col -->
@@ -99,7 +99,7 @@
 			<div class="col-lg-6">
 				<div class="text-container">
 					<h2>Perpanjangan Penahanan</h2>
-					<p><?= $redaksi['perpanjangan_penahanan'] ?></p>
+					<p><?= nl2br($redaksi['perpanjangan_penahanan']) ?></p>
 					<a class="btn-solid-reg" href="<?= base_url('perpanjangan-penahanan') ?>">Isi Formulir</a>
 				</div> <!-- end of text-container -->
 			</div> <!-- end of col -->
