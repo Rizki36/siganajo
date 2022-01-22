@@ -85,7 +85,7 @@
     								</span>
     							</a>
     							<div class="dropdown-items-divide-hr"></div>
-    							<a class="dropdown-item page-scroll" href="<?= base_url('perpanjangan-penahanan') ?>">
+    							<a class="dropdown-item page-scroll" href="<?= base_url('admin/perpanjangan-penahanan') ?>">
     								<span class="item-text">
     									Perpanjangan Penahanan
     								</span>

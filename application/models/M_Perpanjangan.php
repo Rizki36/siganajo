@@ -71,7 +71,7 @@ class M_Perpanjangan extends MY_Model
 /**
  * perpanjangan
  * to convert data from M_Perpanjangan
- * @property int $id_penyitaan
+ * @property int $id_perpanjangan
  * @property int $user_id
  * 
  * @property string $nama_penyidik
@@ -101,9 +101,9 @@ class M_Perpanjangan extends MY_Model
  * @property string $created_at
  * @property bool $is_dibaca
  */
-class Penyitaan_DTO
+class Perpanjangan_DTO
 {
-	public $id_penyitaan;
+	public $id_perpanjangan;
 	public $user_id;
 
 	public $tgl_surat;
@@ -130,7 +130,7 @@ class Penyitaan_DTO
 
 	public function __construct($data)
 	{
-		$this->id_penyitaan = @$data->id_penyitaan;
+		$this->id_perpanjangan = @$data->id_perpanjangan;
 		$this->user_id = @$data->user_id;
 
 		$this->nama_penyidik = @$data->nama_penyidik;
@@ -155,6 +155,7 @@ class Penyitaan_DTO
 		$this->files_json = json_decode(@$data->files_json, true);
 
 		$this->created_at = @$data->created_at;
+		$this->created_at_text = date('d-m-Y', strtotime(@$data->created_at));
 		$this->is_dibaca = (int)@$data->is_dibaca === 1;
 	}
 }
