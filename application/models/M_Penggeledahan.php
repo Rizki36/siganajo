@@ -94,7 +94,8 @@ class Penggeledahan_DTO
 		$this->polres_polsek_pengaju = @$data->polres_polsek_pengaju;
 		$this->jenis_permohonan = @$data->jenis_permohonan;
 		$this->files_json = json_decode(@$data->files_json, true);
-		$this->created_at = strtotime(@$data->created_at);
+		$this->created_at = @$data->created_at;
 		$this->is_dibaca = (int)@$data->is_dibaca === 1;
+		$this->created_at_text = date('d-m-Y', strtotime(@$data->created_at));
 	}
 }
