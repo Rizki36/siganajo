@@ -4,7 +4,7 @@
 		<div class="row justify-content-center">
 			<div class="col-lg-8">
 				<h1>Buat Akun</h1>
-				<p>- Siganajo -</p>
+				<p>- Sigenajo -</p>
 				<!-- Sign Up Form -->
 				<div class="card">
 					<div class="card-body">
