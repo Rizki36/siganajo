@@ -87,12 +87,22 @@ class perpanjangan_penahanan extends CI_Controller
 			$perpanjangan = new Perpanjangan_DTO($record);
 			$temp = (array)$record;
 			$temp['no'] = ++$num_start_row;
-			$temp['created_at'] = $perpanjangan->created_at_text;
-			$temp['penyidik'] = 'Data Penyidik';
+			$temp['created_at'] = date('d-m-Y', strtotime($perpanjangan->created_at_text));
+			$temp['penyidik'] = '<div><b>Data Penyidik</b></div>';
 			$temp['penyidik'] .= "<div>Nama : $perpanjangan->nama_penyidik</div>";
 			$temp['penyidik'] .= "<div>NIP/NRP : $perpanjangan->nip_nrp</div>";
 			$temp['penyidik'] .= "<div>No WA : $perpanjangan->nomor_telepon_wa</div>";
 			$temp['penyidik'] .= "<div>Email : $perpanjangan->email</div>";
+
+			$temp['pihak'] = '';
+			$temp['pihak'] .= "<div>Nama Pihak : $perpanjangan->nama_pihak</div>";
+			$temp['pihak'] .= "<div>Tempat Lahir : $perpanjangan->tempat_lahir</div>";
+			$temp['pihak'] .= "<div>Tanggal Lahir : $perpanjangan->tanggal_lahir</div>";
+			$temp['pihak'] .= "<div>Jenis Kelamin : $perpanjangan->jenis_kelamin</div>";
+			$temp['pihak'] .= "<div>Tempat Tinggal : $perpanjangan->tempat_tinggal</div>";
+			$temp['pihak'] .= "<div>Pekerjaan : $perpanjangan->pekerjaan</div>";
+			$temp['pihak'] .= "<div>Agama : $perpanjangan->agama</div>";
+			$temp['pihak'] .= "<div>Kebangsaan : $perpanjangan->kebangsaan</div>";
 
 			$files = "";
 			if (is_array($perpanjangan->files_json)) {
@@ -105,7 +115,7 @@ class perpanjangan_penahanan extends CI_Controller
 			$temp['penyidik'] .= $files;
 
 			$temp['aksi'] = '';
-			$temp['aksi'] .= "<a style='text-decoration: none;' href='" . base_url('admin/penggeledahan/print/' . base64_encode($perpanjangan->id_perpanjangan))  . "' class='btn btn-block btn-sm btn-primary'>Cetak File</a>";
+			$temp['aksi'] .= "<a style='text-decoration: none;' href='" . base_url('admin/perpanjangan-penahanan/print/' . base64_encode($perpanjangan->id_perpanjangan))  . "' class='btn btn-block btn-sm btn-primary'>Cetak File</a>";
 			if ($perpanjangan->is_dibaca) {
 				$temp['aksi'] .= "<button onclick='mark_read($perpanjangan->id_perpanjangan,0)' class='btn btn-block btn-sm btn-primary'>Tandai <br> Belum Dibaca</button>";
 			} else {

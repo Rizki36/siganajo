@@ -36,6 +36,10 @@
 				orderable: false
 			},
 			{
+				data: 'pihak',
+				orderable: false
+			},
+			{
 				data: 'polres_polsek_pengaju'
 			},
 			{

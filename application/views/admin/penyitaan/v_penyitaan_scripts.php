@@ -53,7 +53,7 @@
 		$datatable.ajax.reload()
 	})
 
-	function mark_read(id) {
+	function mark_read(id, is_read) {
 		Swal.fire({
 			icon: 'info',
 			title: 'Apakah Anda Yakin ?',
@@ -67,7 +67,8 @@
 					type: "POST",
 					url: "<?= base_url('admin/penyitaan/mark_read') ?>",
 					data: {
-						id
+						id,
+						is_read
 					},
 					dataType: "json",
 

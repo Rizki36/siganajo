@@ -22,5 +22,5 @@
 	<!-- <link href="<?= base_url() ?>assets/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet"> -->
 	<link href="<?= base_url() ?>assets/vendor/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<!-- Favicon  -->
-	<link rel="icon" href="images/favicon.png">
+	<link rel="icon" href="<?= base_url('assets/images/logo.png') ?>">
 </head>

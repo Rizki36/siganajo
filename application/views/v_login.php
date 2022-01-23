@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1>Selamat Datang</h1>
-				<p>Di aplikasi sigenajo </p>
+				<p>Di aplikasi <?= @$is_admin ? 'admin' : '' ?> sigenajo </p>
 
 				<!-- Sign Up Form -->
 				<div class="form-container">

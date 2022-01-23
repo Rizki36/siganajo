@@ -11,6 +11,9 @@ class logout extends CI_Controller
 	function index()
 	{
 		$this->session->sess_destroy();
-		redirect('login');
+		if ($_SESSION['role'] === User_Role::admin)
+			redirect('login/admin');
+
+		redirect('login/admin');
 	}
 }

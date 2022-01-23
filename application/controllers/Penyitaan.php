@@ -13,10 +13,10 @@ class penyitaan extends CI_Controller
 
 	public function index()
 	{
-		$form1['nama_penyidik'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Nama Penyidik'];
-		$form1['nip_nrp'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'NIP/NRP'];
-		$form1['nomor_telepon_wa'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Nomor Telepon Wa'];
-		$form1['email'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Email'];
+		$form1['nama_penyidik'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Nama Penyidik', 'attr' => ['required']];
+		$form1['nip_nrp'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'NIP/NRP', 'attr' => ['required']];
+		$form1['nomor_telepon_wa'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Nomor Telepon Wa', 'attr' => ['required']];
+		$form1['email'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Email', 'attr' => ['required']];
 
 		$optionsPolres = [
 			['value' => '', 'label' => 'Pilih Polres Pengaju'],
@@ -46,7 +46,10 @@ class penyitaan extends CI_Controller
 			['value' => 'Lain-lain', 'label' => 'Lain-lain'],
 		];
 
-		$form1['polres_polsek_pengaju'] = ['class_container' => 'col-6', 'type' => 'select', 'options' => $optionsPolres, 'label' => 'Polres Polsek Pengaju'];
+		$form1['polres_polsek_pengaju'] = [
+			'class_container' => 'col-6', 'type' => 'select', 'options' => $optionsPolres, 'label' => 'Polres Polsek Pengaju',
+			'attr' => ['required']
+		];
 
 		$optionsJenis = [
 			['value' => '', 'label' => 'Pilih Jenis Permohonan'],
@@ -79,7 +82,7 @@ class penyitaan extends CI_Controller
 		$step2Form2['surat_pemberitahuan_dimulainya_penyidikan'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'Surat Pemberitahuan Dimulainya Penyidikan', 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form2['ba_penyitaan'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'BA Penyitaan', 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form2['surat_tanda_terima_barang_bukti'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'Surat Tanda Terima Barang Bukti', 'attr' => ['accept' => ".pdf", 'required']];
-		$step2Form2['surat_perintah_penyidik'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'Surat Perintah Penyidik', 'attr' => ['accept' => ".pdf"]];
+		$step2Form2['surat_perintah_penyidik'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'Surat Perintah Penyidik', 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form2['resume_singkat'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'Resume Singkat', 'attr' => ['accept' => ".pdf"]];
 		$step2Form2['jenis_permohonan_'] = ['class_container' => 'd-none', 'type' => 'hidden', 'label' => ''];
 
@@ -166,7 +169,7 @@ class penyitaan extends CI_Controller
 		$time = time();
 		foreach ($inpNames as $inpName) {
 			try {
-				$filename = MyFiles::upload($inpName, $time . '_' . @$_POST['username'] . '_' . $inpName, MyFiles::$penyitaan);
+				$filename = MyFiles::upload($inpName, $time . '_' . @$_SESSION['username'] . '_' . $inpName, MyFiles::$penyitaan);
 				$file_json[$inpName] = $filename;
 			} catch (\Throwable $th) {
 				if ($inpName !== 'resume_singkat') setresponse(400, ['msg' => M_Penyitaan::get_label($inpName) . ' : ' . $th->getMessage()]);
@@ -196,7 +199,7 @@ class penyitaan extends CI_Controller
 		unset($data['files_json']);
 
 		$body = $this->load->view('emails/v_penyitaan', [
-			'title' => 'Form Baru',
+			'title' => 'Form Penyitaan',
 			'text' => 'Pastikan login terlebih dahulu untuk mengakses link dibawah.',
 			'data' => $data,
 			'files' => $file_json,
@@ -204,9 +207,9 @@ class penyitaan extends CI_Controller
 			'is_admin' => true,
 			'link' => base_url('admin/penyitaan/print/' . $enc_id)
 		], true);
-		MyEmail::send('sigenajo.pn.jombang@gmail.com', 'Form baru', $body);
+		MyEmail::send('sigenajo.pn.jombang@gmail.com', 'Form Penyitaan', $body);
 		$body = $this->load->view('emails/v_penyitaan', [
-			'title' => 'Form Baru',
+			'title' => 'Form Penyitaan',
 			'text' => 'Pastikan login terlebih dahulu untuk mengakses link dibawah.',
 			'data' => $data,
 			'files' => $file_json,
@@ -214,7 +217,7 @@ class penyitaan extends CI_Controller
 			'is_admin' => false,
 			'link' => base_url('admin/penyitaan/print/' . $enc_id)
 		], true);
-		MyEmail::send($data['email'], 'Salinan Form', $body);
+		MyEmail::send($data['email'], 'Form Penyitaan', $body);
 
 		setresponse(200, $data);
 	}

@@ -27,15 +27,24 @@ class M_Perpanjangan extends MY_Model
 	public static function get_label($key)
 	{
 		switch ($key) {
+			case 'tgl_surat':
+				return 'Tanggal Surat';
+			case 'alasan_perpanjangan':
+				return 'Alasan Perpanjangan';
+			case 'nomor_surat':
+				return 'Nomor Surat';
 			case 'nama_penyidik':
 				return 'Nama Penyidik';
+			case 'polres_polsek_pengaju':
+				return 'Polres/Polsek Pengaju';
 			case 'nip_nrp':
 				return 'NIP/NRP';
 			case 'nomor_telepon_wa':
 				return 'Nomor Telepon WA';
 			case 'email':
 				return 'Email';
-
+			case 'tanggal_ba':
+				return 'Tanggal BA';
 			case 'nama_pihak':
 				return 'Nama Pihak';
 			case 'tempat_lahir':
@@ -53,26 +62,16 @@ class M_Perpanjangan extends MY_Model
 			case 'kebangsaan':
 				return 'Kebangsaan';
 
-			case 'polres_polsek_pengaju':
-				return 'Polres Polsek Pengaju';
-			case 'jenis_permohonan':
-				return 'Jenis Permohonan';
-			case 'surat_permohonan_dari_penyidik':
-				return 'Surat Permohonan Dari Penyidik';
-			case 'surat_perintah_penyitaan':
-				return 'Surat Perintah Penyitaan';
+			case 'surat_permohonan_penyidik':
+				return 'Upload surat permohonan penyidik';
 			case 'laporan_polisi':
-				return 'Laporan Polisi';
-			case 'surat_pemberitahuan_dimulainya_penyidikan':
-				return 'Surat Pemberitahuan Dimulainya Penyidikan';
-			case 'ba_penyitaan':
-				return 'BA Penyitaan';
-			case 'surat_tanda_terima_barang_bukti':
-				return 'Surat Tanda Terima Barang Bukti';
-			case 'surat_perintah_penyidik':
-				return 'Surat Perintah Penyidik';
+				return 'Upload laporan polisi';
+			case 'surat_perintah_penahanan':
+				return 'Upload surat perintah penahanan';
+			case 'surat_permintaan_perpanjangan_penuntut_umum':
+				return 'Upload surat permintaan perpanjangan penuntut umum';
 			case 'resume_singkat':
-				return 'Resume Singkat';
+				return 'Upload resume singkat';
 			default:
 				return $key;
 		}

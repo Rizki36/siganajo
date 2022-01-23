@@ -67,7 +67,7 @@ class signup extends CI_Controller
 		MyEmail::send('sigenajo.pn.jombang@gmail.com', 'User Register', $this->load->view('emails/v_register', [
 			'name' => $data['name'],
 			'origin_unit' => $data['origin_unit'],
-			'link' => base_url('admin/users/' .  $this->db->insert_id())
+			'link' => base_url('admin/users?s=unverified')
 		], true));
 
 		setresponse(200, [

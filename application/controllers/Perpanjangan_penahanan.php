@@ -96,14 +96,12 @@ class perpanjangan_penahanan extends CI_Controller
 		$steps['penyidik']['name'] = 'PERPANJANGAN PENAHANAN';
 
 		// ---- step 2 ---- //
-		$step2Form['surat_permohonan_dari_penyidik'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => M_Perpanjangan::get_label('surat_permohonan_dari_penyidik'), 'attr' => ['accept' => ".pdf", 'required']];
-		$step2Form['surat_perintah_penyitaan'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => M_Perpanjangan::get_label('surat_perintah_penyitaan'), 'attr' => ['accept' => ".pdf", 'required']];
+		$step2Form['surat_permohonan_penyidik'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => M_Perpanjangan::get_label('surat_permohonan_penyidik'), 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form['laporan_polisi'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => M_Perpanjangan::get_label('laporan_polisi'), 'attr' => ['accept' => ".pdf", 'required']];
-		$step2Form['surat_pemberitahuan_dimulainya_penyidikan'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => M_Perpanjangan::get_label('surat_pemberitahuan_dimulainya_penyidikan'), 'attr' => ['accept' => ".pdf", 'required']];
-		$step2Form['ba_penyitaan'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => M_Perpanjangan::get_label('ba_penyitaan'), 'attr' => ['accept' => ".pdf", 'required']];
-		$step2Form['surat_tanda_terima_barang_bukti'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => M_Perpanjangan::get_label('surat_tanda_terima_barang_bukti'), 'attr' => ['accept' => ".pdf", 'required']];
-		$step2Form['surat_perintah_penyidik'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => M_Perpanjangan::get_label('surat_perintah_penyidik'), 'attr' => ['accept' => ".pdf", 'required']];
+		$step2Form['surat_perintah_penahanan'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => M_Perpanjangan::get_label('surat_perintah_penahanan'), 'attr' => ['accept' => ".pdf", 'required']];
+		$step2Form['surat_permintaan_perpanjangan_penuntut_umum'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => M_Perpanjangan::get_label('surat_permintaan_perpanjangan_penuntut_umum'), 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form['resume_singkat'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => M_Perpanjangan::get_label('resume_singkat'), 'attr' => ['accept' => ".pdf"]];
+
 		$steps['berkas']['forms']['step2Form']['input'] = $step2Form;
 		$steps['berkas']['forms']['step2Form']['template_attr'] = ['x-if' => "true"];
 		$steps['berkas']['validation_link'] = base_url('perpanjangan_penahanan/validation_berkas');
@@ -155,21 +153,18 @@ class perpanjangan_penahanan extends CI_Controller
 	{
 		## upload file
 		$inpNames = [
-			'surat_permohonan_dari_penyidik',
-			'surat_perintah_penyitaan',
+			'surat_permohonan_penyidik',
 			'laporan_polisi',
-			'surat_pemberitahuan_dimulainya_penyidikan',
-			'ba_penyitaan',
-			'surat_tanda_terima_barang_bukti',
-			'surat_perintah_penyidik',
-			'resume_singkat',
+			'surat_perintah_penahanan',
+			'surat_permintaan_perpanjangan_penuntut_umum',
+			'resume_singkat'
 		];
 
 		$file_json = [];
 		$time = time();
 		foreach ($inpNames as $inpName) {
 			try {
-				$filename = MyFiles::upload($inpName, $time . '_' . @$_POST['username'] . '_' . $inpName, MyFiles::$penggeledahan);
+				$filename = MyFiles::upload($inpName, $time . '_' . @$_SESSION['username'] . '_' . $inpName, MyFiles::$perpanjangan);
 				$file_json[$inpName] = $filename;
 			} catch (\Throwable $th) {
 				if ($inpName !== 'resume_singkat') setresponse(400, ['msg' => M_Perpanjangan::get_label($inpName) . ' : ' . $th->getMessage()]);
@@ -178,11 +173,16 @@ class perpanjangan_penahanan extends CI_Controller
 
 		$data = [
 			'user_id' => @$_SESSION['user_id'],
+
 			'tgl_surat' => filter_xss(@$_POST['tgl_surat']),
+			'nomor_surat' => filter_xss(@$_POST['nomor_surat']),
+			'alasan_perpanjangan' => filter_xss(@$_POST['alasan_perpanjangan']),
 			'nama_penyidik' => filter_xss(@$_POST['nama_penyidik']),
 			'nip_nrp' => filter_xss(@$_POST['nip_nrp']),
 			'nomor_telepon_wa' => filter_xss(@$_POST['nomor_telepon_wa']),
 			'email' => filter_xss(@$_POST['email']),
+			'polres_polsek_pengaju' => filter_xss(@$_POST['polres_polsek_pengaju']),
+			'tanggal_ba' => filter_xss(@$_POST['tanggal_ba']),
 			'nama_pihak' => filter_xss(@$_POST['nama_pihak']),
 			'tempat_lahir' => filter_xss(@$_POST['tempat_lahir']),
 			'tanggal_lahir' => filter_xss(@$_POST['tanggal_lahir']),
@@ -191,6 +191,7 @@ class perpanjangan_penahanan extends CI_Controller
 			'pekerjaan' => filter_xss(@$_POST['pekerjaan']),
 			'agama' => filter_xss(@$_POST['agama']),
 			'kebangsaan' => filter_xss(@$_POST['kebangsaan']),
+
 			'files_json' => json_encode($file_json)
 		];
 
@@ -204,9 +205,12 @@ class perpanjangan_penahanan extends CI_Controller
 
 		unset($data['user_id']);
 		unset($data['files_json']);
+		$data['tgl_surat'] = date('d-m-Y', strtotime($data['tgl_surat']));
+		$data['tanggal_lahir'] = date('d-m-Y', strtotime($data['tanggal_lahir']));
+		$data['tanggal_ba'] = date('d-m-Y', strtotime($data['tanggal_ba']));
 
 		$body = $this->load->view('emails/v_perpanjangan', [
-			'title' => 'Form Baru',
+			'title' => 'Form Perpanjangan Penahanan',
 			'text' => 'Pastikan login terlebih dahulu untuk mengakses link dibawah.',
 			'data' => $data,
 			'files' => $file_json,
@@ -214,9 +218,9 @@ class perpanjangan_penahanan extends CI_Controller
 			'is_admin' => true,
 			'link' => base_url('admin/perpanjangan-penahanan/print/' . $enc_id)
 		], true);
-		MyEmail::send('sigenajo.pn.jombang@gmail.com', 'Form baru', $body);
+		MyEmail::send('sigenajo.pn.jombang@gmail.com', 'Form Perpanjangan Penahanan', $body);
 		$body = $this->load->view('emails/v_perpanjangan', [
-			'title' => 'Form Baru',
+			'title' => 'Form Perpanjangan Penahanan',
 			'text' => 'Pastikan login terlebih dahulu untuk mengakses link dibawah.',
 			'data' => $data,
 			'files' => $file_json,
@@ -224,7 +228,7 @@ class perpanjangan_penahanan extends CI_Controller
 			'is_admin' => false,
 			'link' => base_url('admin/perpanjangan-penahanan/print/' . $enc_id)
 		], true);
-		MyEmail::send($data['email'], 'Salinan Form', $body);
+		MyEmail::send($data['email'], 'Form Perpanjangan Penahanan', $body);
 
 		setresponse(200, $data);
 	}

@@ -25,7 +25,8 @@
 						<tr>
 							<th style="" class="text-white">No</th>
 							<th style="" class="text-white">Tanggal</th>
-							<th style="min-width: 100px;" class="text-white">Data</th>
+							<th style="min-width: 100px;" class="text-white">Data Penyidik</th>
+							<th style="min-width: 100px;" class="text-white">Data Pihak</th>
 							<th style="min-width: 100px;" class="text-white">Polres/Polsek Pengaju</th>
 							<th style="min-width: 100px;" class="text-white text-center">Aksi</th>
 						</tr>

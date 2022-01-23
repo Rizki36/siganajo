@@ -103,8 +103,13 @@ class penyitaan extends CI_Controller
 			$temp['penyidik'] .= $files;
 
 			$temp['aksi'] = '';
-			$temp['aksi'] .= "<a href='" . base_url('admin/penyitaan/print/' . base64_encode($penyitaan->id_penyitaan))  . "' class='btn btn-block btn-sm btn-primary'>Cetak File</a>";
-			$temp['aksi'] .= "<button onclick='mark_read($penyitaan->id_penyitaan)' class='btn btn-block btn-sm btn-primary'>Tandai <br> Sudah Dibaca</button>";
+			$temp['aksi'] .= "<a style='text-decoration: none;' href='" . base_url('admin/penyitaan/print/' . base64_encode($penyitaan->id_penyitaan))  . "' class='btn btn-block btn-sm btn-primary'>Cetak File</a>";
+
+			if ($penyitaan->is_dibaca) {
+				$temp['aksi'] .= "<button onclick='mark_read($penyitaan->id_penyitaan,0)' class='btn btn-block btn-sm btn-primary'>Tandai <br> Belum Dibaca</button>";
+			} else {
+				$temp['aksi'] .= "<button onclick='mark_read($penyitaan->id_penyitaan,1)' class='btn btn-block btn-sm btn-primary'>Tandai <br> Sudah Dibaca</button>";
+			}
 
 			$data['data'][] = $temp;
 		}
