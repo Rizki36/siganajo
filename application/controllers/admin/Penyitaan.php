@@ -121,6 +121,8 @@ class penyitaan extends CI_Controller
 	public function print($id)
 	{
 		$id = filter_xss(base64_decode($id));
+		$is_all_file = (int)@$_GET['all'] === 1;
+
 		$this->load->model('M_Penyitaan');
 		$m_penyitaan = new M_Penyitaan();
 
@@ -136,6 +138,8 @@ class penyitaan extends CI_Controller
 		foreach ($data->files_json as $key => $value) {
 			## check if exist file
 			if ($value == '') continue;
+			if (!$is_all_file && $key === 'resume_singkat') continue;
+
 			$path = APPPATH . '../assets/data/penyitaan/' . $value;
 			if (!file_exists($path)) continue;
 			try {
