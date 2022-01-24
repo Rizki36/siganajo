@@ -61,6 +61,11 @@
 
 																	<tr>
 																		<td align="center">
+																			<a href="<?= $link_all ?>" rel="noopener noreferrer" style="font-family:Verdana,Sans-Serif;background-color:#492682;border-radius:3px;color:#ffffff;display:inline-block;font-size:14px;line-height:50px;text-align:center;text-decoration:none;width:300px;margin-top:20px;margin-bottom:20px" target="_blank"><strong>Download Semua Berkas</strong></a>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td align="center">
 																			<a href="<?= $link ?>" rel="noopener noreferrer" style="font-family:Verdana,Sans-Serif;background-color:#492682;border-radius:3px;color:#ffffff;display:inline-block;font-size:14px;line-height:50px;text-align:center;text-decoration:none;width:300px;margin-top:20px;margin-bottom:20px" target="_blank"><strong>Download Berkas</strong></a>
 																		</td>
 																	</tr>

@@ -63,18 +63,27 @@ class perpanjangan_penahanan extends CI_Controller
 
 		$configData['selected_column'][] = 'perpanjangan.*';
 
-		## display column -> Represent column in view
-		// set false if column not in db table (column number, action, etc)
+
+		## search column
 		$num_start_row = $configData['start'];
 		$configData['display_column'] = [
-			// false,
-			// 'created_at',
-			// 'nama_penyidik',
-			// 'nip_nrp',
-			// 'nomor_telepon_wa',
-			// 'email',
-			// 'polres_polsek_pengaju',
-			// 'jenis_permohonan',
+			'tgl_surat',
+			'nomor_surat',
+			'alasan_perpanjangan',
+			'nama_penyidik',
+			'nip_nrp',
+			'nomor_telepon_wa',
+			'email',
+			'polres_polsek_pengaju',
+			'tanggal_ba',
+			'nama_pihak',
+			'tempat_lahir',
+			'tanggal_lahir',
+			'jenis_kelamin',
+			'tempat_tinggal',
+			'pekerjaan',
+			'agama',
+			'kebangsaan',
 		];
 
 		## get data
@@ -93,11 +102,12 @@ class perpanjangan_penahanan extends CI_Controller
 			$temp['penyidik'] .= "<div>NIP/NRP : $perpanjangan->nip_nrp</div>";
 			$temp['penyidik'] .= "<div>No WA : $perpanjangan->nomor_telepon_wa</div>";
 			$temp['penyidik'] .= "<div>Email : $perpanjangan->email</div>";
+			$temp['penyidik'] .= "<div>Alasan Perpanjangan : <br> $perpanjangan->alasan_perpanjangan</div> <br>";
 
 			$temp['pihak'] = '';
 			$temp['pihak'] .= "<div>Nama Pihak : $perpanjangan->nama_pihak</div>";
 			$temp['pihak'] .= "<div>Tempat Lahir : $perpanjangan->tempat_lahir</div>";
-			$temp['pihak'] .= "<div>Tanggal Lahir : $perpanjangan->tanggal_lahir</div>";
+			$temp['pihak'] .= "<div>Tanggal Lahir : $perpanjangan->tanggal_lahir_text</div>";
 			$temp['pihak'] .= "<div>Jenis Kelamin : $perpanjangan->jenis_kelamin</div>";
 			$temp['pihak'] .= "<div>Tempat Tinggal : $perpanjangan->tempat_tinggal</div>";
 			$temp['pihak'] .= "<div>Pekerjaan : $perpanjangan->pekerjaan</div>";
@@ -133,6 +143,8 @@ class perpanjangan_penahanan extends CI_Controller
 	public function print($id)
 	{
 		$id = filter_xss(base64_decode($id));
+		$is_all_file = (int)@$_GET['all'] === 1;
+
 		$m_perpanjangan = new M_Perpanjangan();
 
 		$data = $m_perpanjangan->getOne('*', ['id_perpanjangan' => $id]);
@@ -147,6 +159,8 @@ class perpanjangan_penahanan extends CI_Controller
 		foreach ($data->files_json as $key => $value) {
 			## check if exist file
 			if ($value == '') continue;
+			if (!$is_all_file && $key === 'resume_singkat') continue;
+
 			$path = APPPATH . '../assets/data/perpanjangan/' . $value;
 			if (!file_exists($path)) continue;
 			try {

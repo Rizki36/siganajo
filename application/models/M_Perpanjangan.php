@@ -161,6 +161,8 @@ class Perpanjangan_DTO
 		$this->agama = @$data->agama;
 		$this->kebangsaan = @$data->kebangsaan;
 
+		$this->tanggal_lahir_text = date('d-m-Y', strtotime(@$data->tanggal_lahir));
+
 		$this->files_json = json_decode(@$data->files_json, true);
 
 		$this->created_at = @$data->created_at;
