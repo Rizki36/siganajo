@@ -43,6 +43,8 @@ class M_Datatables extends MY_Model
 		$searchValue = $postData['search']['value']; // Search value
 		$search_arr = array();
 		if ($searchValue != '') {
+			$searchValue = filter_xss($searchValue);
+			$searchValue = str_replace(["'"], '', $searchValue);
 			$searchQuery = [];
 			$searchColumn = $postData['display_column'];
 			if (isset($postData['search_column'])) $searchColumn = $postData['search_column']; // migration from $postData['display_column'] to $postData['search_column']
@@ -70,6 +72,8 @@ class M_Datatables extends MY_Model
 					$search_arr[] = $filter;
 				} else if (is_array($filter)) {
 					foreach ($filter as $key => $value) {
+						$value = filter_xss($value);
+						$value = str_replace(["'"], '', $value);
 						$search_arr[] = "$key = '$value'";
 					}
 				}
