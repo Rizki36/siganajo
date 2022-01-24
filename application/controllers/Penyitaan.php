@@ -205,7 +205,8 @@ class penyitaan extends CI_Controller
 			'files' => $file_json,
 			'path' => MyFiles::$penyitaan,
 			'is_admin' => true,
-			'link' => base_url('admin/penyitaan/print/' . $enc_id)
+			'link' => base_url('admin/penyitaan/print/' . $enc_id),
+			'link_all' => base_url('admin/penyitaan/print/' . $enc_id . '?all=1'),
 		], true);
 		MyEmail::send('sigenajo.pn.jombang@gmail.com', 'Form Penyitaan', $body);
 		$body = $this->load->view('emails/v_penyitaan', [
@@ -216,7 +217,6 @@ class penyitaan extends CI_Controller
 			'path' => MyFiles::$penyitaan,
 			'is_admin' => false,
 			'link' => base_url('admin/penyitaan/print/' . $enc_id),
-			'link_all' => base_url('admin/penyitaan/print/' . $enc_id . '?all=1'),
 		], true);
 		MyEmail::send($data['email'], 'Form Penyitaan', $body);
 
