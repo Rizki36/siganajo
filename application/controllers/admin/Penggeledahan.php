@@ -122,6 +122,7 @@ class penggeledahan extends CI_Controller
 	{
 		$id = filter_xss(base64_decode($id));
 		$m_penggeledahan = new M_Penggeledahan();
+		$is_all_file = (int)@$_GET['all'] === 1;
 
 		$data = $m_penggeledahan->getOne('*', ['id_penggeledahan' => $id]);
 		if (!$data) exit('Data tidak ada !');
@@ -135,6 +136,8 @@ class penggeledahan extends CI_Controller
 		foreach ($data->files_json as $key => $value) {
 			## check if exist file
 			if ($value == '') continue;
+			if (!$is_all_file && $key === 'resume_singkat') continue;
+
 			$path = APPPATH . '../assets/data/penggeledahan/' . $value;
 			if (!file_exists($path)) continue;
 			try {

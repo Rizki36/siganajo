@@ -212,7 +212,8 @@ class penggeledahan extends CI_Controller
 			'files' => $file_json,
 			'path' => MyFiles::$penggeledahan,
 			'is_admin' => false,
-			'link' => base_url('admin/penggeledahan/print/' . $enc_id)
+			'link' => base_url('admin/penggeledahan/print/' . $enc_id),
+			'link_all' => base_url('admin/penggeledahan/print/' . $enc_id . '?all=1'),
 		], true);
 		MyEmail::send($data['email'], 'Form Penggeledahan', $body);
 
