@@ -219,7 +219,7 @@ class perpanjangan_penahanan extends CI_Controller
 			'link' => base_url('admin/perpanjangan-penahanan/print/' . $enc_id),
 			'link_all' => base_url('admin/perpanjangan-penahanan/print/' . $enc_id . '?all=1')
 		], true);
-		MyEmail::send('sigenajo.pn.jombang@gmail.com', 'Form Perpanjangan Penahanan', $body);
+		MyEmail::send(EMAIL_SENDER, 'Form Perpanjangan Penahanan', $body);
 		$body = $this->load->view('emails/v_perpanjangan', [
 			'title' => 'Form Perpanjangan Penahanan',
 			'text' => 'Pastikan login terlebih dahulu untuk mengakses link dibawah.',
