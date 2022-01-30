@@ -13,10 +13,11 @@ class penggeledahan extends CI_Controller
 
 	public function index()
 	{
-		$form1['nama_penyidik'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Nama Penyidik'];
-		$form1['nip_nrp'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'NIP/NRP'];
-		$form1['nomor_telepon_wa'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Nomor Telepon Wa'];
-		$form1['email'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Email'];
+		$form1['heading_penyidik'] = ['class_container' => 'col-12', 'type' => 'heading', 'text' => 'DATA PENYIDIK', 'attr' => ['required']];
+		$form1['nama_penyidik'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Nama Penyidik', 'attr' => ['required']];
+		$form1['nip_nrp'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'NIP/NRP', 'attr' => ['required']];
+		$form1['nomor_telepon_wa'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Nomor Telepon Wa', 'attr' => ['required']];
+		$form1['email'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => 'Email', 'attr' => ['required']];
 
 		$optionsPolres = [
 			['value' => '', 'label' => 'Pilih Polres Pengaju'],
@@ -46,7 +47,12 @@ class penggeledahan extends CI_Controller
 			['value' => 'Lain-lain', 'label' => 'Lain-lain'],
 		];
 
-		$form1['polres_polsek_pengaju'] = ['class_container' => 'col-6', 'type' => 'select', 'options' => $optionsPolres, 'label' => 'Polres Polsek Pengaju'];
+		$form1['polres_polsek_pengaju'] = [
+			'class_container' => 'col-6', 'type' => 'select', 'options' => $optionsPolres, 'label' => 'Polres Polsek Pengaju',
+			'attr' => [
+				'required'
+			]
+		];
 
 		$optionsJenis = [
 			['value' => '', 'label' => 'Pilih Jenis Permohonan'],
@@ -57,15 +63,20 @@ class penggeledahan extends CI_Controller
 		$form1['jenis_permohonan'] = [
 			'class_container' => 'col-6', 'type' => 'select', 'options' => $optionsJenis, 'label' => 'Jenis Permohonan',
 			'attr' => [
-				'x-model' => 'jenis_permohonan'
+				'x-model' => 'jenis_permohonan',
+				'required'
 			]
 		];
+
+		$form1['heading_pihak'] = ['class_container' => 'col-12 mt-5', 'type' => 'heading', 'text' => 'DATA PIHAK', 'attr' => ['required']];
+		$form1['nama_pihak'] = ['class_container' => 'col-6', 'type' => 'text', 'label' => M_Penggeledahan::get_label('nama_pihak'), 'attr' => ['required']];
 
 		$steps['penyidik']['forms']['first']['input'] = $form1;
 		$steps['penyidik']['forms']['first']['template_attr'] = ['x-if' => 'true'];
 		$steps['penyidik']['validation_link'] = base_url('penggeledahan/validation_penyidik');
-		$steps['penyidik']['name'] = 'Data Penyidik';
+		$steps['penyidik']['name'] = 'PENGGELEDAHAN';
 
+		$step2Form1['heading_berkas'] = ['class_container' => 'col-12', 'type' => 'heading', 'text' => 'DATA BERKAS'];
 		$step2Form1['surat_permohonan_dari_penyidik'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => 'Surat Permohonan Dari Penyidik', 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form1['surat_perintah_penggeledahan'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => 'Surat Perintah Penggeledahan', 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form1['ba_penggeledahan'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => 'BA Penggeledahan', 'attr' => ['accept' => ".pdf", 'required']];
@@ -73,6 +84,7 @@ class penggeledahan extends CI_Controller
 		$step2Form1['resume_singkat'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => 'Resume Singkat', 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form1['jenis_permohonan_'] = ['class_container' => 'd-none', 'type' => 'hidden', 'label' => ''];
 
+		$step2Form2['heading_berkas'] = ['class_container' => 'col-12', 'type' => 'heading', 'text' => 'DATA BERKAS'];
 		$step2Form2['surat_permohonan_dari_penyidik'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'Surat Permohonan Dari Penyidik', 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form2['surat_perintah_penggeledahan'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'Surat Perintah Penggeledahan', 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form2['laporan_polisi'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'Laporan Polisi', 'attr' => ['accept' => ".pdf", 'required']];
@@ -88,7 +100,7 @@ class penggeledahan extends CI_Controller
 		$steps['berkas']['forms']['berkas2']['input'] = $step2Form2;
 		$steps['berkas']['forms']['berkas2']['template_attr'] = ['x-if' => "jenis_permohonan === 'Persetujuan Penggeledahan'"];
 		$steps['berkas']['validation_link'] = base_url('penggeledahan/validation_berkas');
-		$steps['berkas']['name'] = 'Data Berkas';
+		$steps['berkas']['name'] = 'PENGGELEDAHAN';
 
 		$this->load->view('layout', [
 			'main' => $this->load->view(
@@ -115,6 +127,7 @@ class penggeledahan extends CI_Controller
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('polres_polsek_pengaju', 'Polres Polsek Pengaju', 'trim|required');
 		$this->form_validation->set_rules('jenis_permohonan', 'Jenis Permohonan', 'trim|required');
+		$this->form_validation->set_rules('nama_pihak', 'Nama Pihak', 'trim|required|min_length[3]');
 
 		## validatoon error
 		if (!$this->form_validation->run()) {
@@ -134,6 +147,7 @@ class penggeledahan extends CI_Controller
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('polres_polsek_pengaju', 'Polres Polsek Pengaju', 'trim|required');
 		$this->form_validation->set_rules('jenis_permohonan', 'Jenis Permohonan', 'trim|required');
+		$this->form_validation->set_rules('nama_pihak', 'Nama Pihak', 'trim|required|min_length[3]');
 
 		## validatoon error
 		if (!$this->form_validation->run()) setresponse(400, [
@@ -181,6 +195,7 @@ class penggeledahan extends CI_Controller
 			'email' => filter_xss($this->input->post('email')),
 			'polres_polsek_pengaju' => filter_xss($this->input->post('polres_polsek_pengaju')),
 			'jenis_permohonan' => filter_xss($this->input->post('jenis_permohonan')),
+			'nama_pihak' => filter_xss($this->input->post('nama_pihak')),
 			'files_json' => json_encode($file_json)
 		];
 
