@@ -36,7 +36,7 @@
 																		<?php foreach ($data as $key => $val) : ?>
 																			<div style="margin-bottom: 1rem;">
 																				<label for=""><?= M_Penyitaan::get_label($key) ?></label>
-																				<div style="display: block;width: 100%;min-height: 23px;padding: 0.375rem 0.75rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: 0.25rem;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
+																				<div style="display: block;min-height: 23px;padding: 0.375rem 0.75rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #495057;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;border-radius: 0.25rem;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;">
 																					<?= $val ?>
 																				</div>
 																			</div>
