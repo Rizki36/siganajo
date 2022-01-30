@@ -35,11 +35,12 @@ class M_Penggeledahan extends MY_Model
 				return 'Nomor Telepon WA';
 			case 'email':
 				return 'Email';
+			case 'nama_pihak':
+				return 'Nama Pihak';
 			case 'polres_polsek_pengaju':
 				return 'Polres Polsek Pengaju';
 			case 'jenis_permohonan':
 				return 'Jenis Permohonan';
-
 			case 'surat_permohonan_dari_penyidik':
 				return 'Surat Permohonan Dari Penyidik / PPNS';
 			case 'surat_perintah_penggeledahan':
@@ -88,6 +89,7 @@ class Penggeledahan_DTO
 	public $nip_nrp;
 	public $nomor_telepon_wa;
 	public $email;
+	public $nama_pihak;
 	public $polres_polsek_pengaju;
 	public $jenis_permohonan;
 	public $files_json;
@@ -102,6 +104,7 @@ class Penggeledahan_DTO
 		$this->nip_nrp = @$data->nip_nrp;
 		$this->nomor_telepon_wa = @$data->nomor_telepon_wa;
 		$this->email = @$data->email;
+		$this->nama_pihak = @$data->nama_pihak;
 		$this->polres_polsek_pengaju = @$data->polres_polsek_pengaju;
 		$this->jenis_permohonan = @$data->jenis_permohonan;
 		$this->files_json = json_decode(@$data->files_json, true);
