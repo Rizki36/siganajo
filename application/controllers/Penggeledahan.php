@@ -70,7 +70,7 @@ class penggeledahan extends CI_Controller
 		$step2Form1['surat_perintah_penggeledahan'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => 'Surat Perintah Penggeledahan', 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form1['ba_penggeledahan'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => 'BA Penggeledahan', 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form1['surat_pemberitahuan_dimulainya_penyidikan'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => 'Surat Pemberitahuan Dimulainya Penyidikan', 'attr' => ['accept' => ".pdf", 'required']];
-		$step2Form1['resume_singkat'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => 'Resume Singkat', 'attr' => ['accept' => ".pdf",]];
+		$step2Form1['resume_singkat'] = ['class_container' => 'col-12', 'type' => 'file', 'label' => 'Resume Singkat', 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form1['jenis_permohonan_'] = ['class_container' => 'd-none', 'type' => 'hidden', 'label' => ''];
 
 		$step2Form2['surat_permohonan_dari_penyidik'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'Surat Permohonan Dari Penyidik', 'attr' => ['accept' => ".pdf", 'required']];
@@ -80,7 +80,7 @@ class penggeledahan extends CI_Controller
 		$step2Form2['ba_penggeledahan'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'BA Penggeledahan', 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form2['surat_tanda_terima_barang_bukti'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'Surat Tanda Terima Barang Bukti', 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form2['surat_perintah_penyidik'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'Surat Perintah Penyidik', 'attr' => ['accept' => ".pdf", 'required']];
-		$step2Form2['resume_singkat'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'Resume Singkat', 'attr' => ['accept' => ".pdf"]];
+		$step2Form2['resume_singkat'] = ['class_container' => 'col-12', 'class' => '', 'type' => 'file', 'label' => 'Resume Singkat', 'attr' => ['accept' => ".pdf", 'required']];
 		$step2Form2['jenis_permohonan_'] = ['class_container' => 'd-none', 'type' => 'hidden', 'label' => ''];
 
 		$steps['berkas']['forms']['berkas1']['input'] = $step2Form1;
