@@ -93,6 +93,7 @@ class Penyitaan_DTO
 	public $files_json;
 	public $created_at;
 	public $is_dibaca;
+	public $created_at_text;
 
 	public function __construct($data)
 	{
@@ -108,5 +109,6 @@ class Penyitaan_DTO
 		$this->files_json = json_decode(@$data->files_json, true);
 		$this->created_at = @$data->created_at;
 		$this->is_dibaca = (int)@$data->is_dibaca === 1;
+		$this->created_at_text = date('d-m-Y', strtotime(@$data->created_at));
 	}
 }

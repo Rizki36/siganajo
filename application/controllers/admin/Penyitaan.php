@@ -75,6 +75,7 @@ class penyitaan extends CI_Controller
 			'email',
 			'polres_polsek_pengaju',
 			'jenis_permohonan',
+			'nama_pihak'
 		];
 
 		## get data
@@ -87,12 +88,13 @@ class penyitaan extends CI_Controller
 			$penyitaan = new Penyitaan_DTO($record);
 			$temp = (array)$record;
 			$temp['no'] = ++$num_start_row;
-			$temp['created_at'] = $penyitaan->created_at;
+			$temp['created_at'] = $penyitaan->created_at_text;
 			$temp['penyidik'] = '';
 			$temp['penyidik'] .= "<div>Nama : $penyitaan->nama_penyidik</div>";
 			$temp['penyidik'] .= "<div>NIP/NRP : $penyitaan->nip_nrp</div>";
 			$temp['penyidik'] .= "<div>No WA : $penyitaan->nomor_telepon_wa</div>";
 			$temp['penyidik'] .= "<div>Email : $penyitaan->email</div>";
+			$temp['penyidik'] .= "<br>";
 
 			$files = "";
 			if (is_array($penyitaan->files_json)) {
@@ -101,6 +103,9 @@ class penyitaan extends CI_Controller
 				}
 			}
 			$temp['penyidik'] .= $files;
+
+			$temp['pihak'] = '';
+			$temp['pihak'] .= "<div>Nama : $penyitaan->nama_pihak</div>";
 
 			$temp['aksi'] = '';
 			$temp['aksi'] .= "<a style='text-decoration: none;' href='" . base_url('admin/penyitaan/print/' . base64_encode($penyitaan->id_penyitaan))  . "' class='btn btn-block btn-sm btn-primary'>Cetak File</a>";
