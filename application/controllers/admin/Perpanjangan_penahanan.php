@@ -103,8 +103,19 @@ class perpanjangan_penahanan extends CI_Controller
 			$temp['penyidik'] .= "<div>No WA : $perpanjangan->nomor_telepon_wa</div>";
 			$temp['penyidik'] .= "<div>Email : $perpanjangan->email</div>";
 			$temp['penyidik'] .= "<div>Alasan Perpanjangan : <br> $perpanjangan->alasan_perpanjangan</div> <br>";
+			$temp['penyidik'] .= '<br>';
 
-			$temp['pihak'] = '';
+
+			$files = "";
+			if (is_array($perpanjangan->files_json)) {
+				foreach ($perpanjangan->files_json as $key => $val) {
+					$files .= "<div><a target='_blank' href=" . base_url(MyFiles::$perpanjangan . '/' . $val) . ">" . M_Perpanjangan::get_label($key) . "</a></div>";
+				}
+			}
+			$temp['penyidik'] .= '<div><b>Data Berkas</b></div>';
+			$temp['penyidik'] .= $files;
+
+			$temp['pihak'] = '<div><b>Data Pihak</b></div>';
 			$temp['pihak'] .= "<div>Nama Pihak : $perpanjangan->nama_pihak</div>";
 			$temp['pihak'] .= "<div>Tempat Lahir : $perpanjangan->tempat_lahir</div>";
 			$temp['pihak'] .= "<div>Tanggal Lahir : $perpanjangan->tanggal_lahir_text</div>";
@@ -113,16 +124,6 @@ class perpanjangan_penahanan extends CI_Controller
 			$temp['pihak'] .= "<div>Pekerjaan : $perpanjangan->pekerjaan</div>";
 			$temp['pihak'] .= "<div>Agama : $perpanjangan->agama</div>";
 			$temp['pihak'] .= "<div>Kebangsaan : $perpanjangan->kebangsaan</div>";
-
-			$files = "";
-			if (is_array($perpanjangan->files_json)) {
-				foreach ($perpanjangan->files_json as $key => $val) {
-					$files .= "<div><a target='_blank' href=" . base_url(MyFiles::$perpanjangan . '/' . $val) . ">" . M_Perpanjangan::get_label($key) . "</a></div>";
-				}
-			}
-			$temp['penyidik'] .= '<div></div>';
-			$temp['penyidik'] .= '<div>Berkas</div>';
-			$temp['penyidik'] .= $files;
 
 			$temp['aksi'] = '';
 			$temp['aksi'] .= "<a style='text-decoration: none;' href='" . base_url('admin/perpanjangan-penahanan/print/' . base64_encode($perpanjangan->id_perpanjangan))  . "' class='btn btn-block btn-sm btn-primary'>Cetak File</a>";

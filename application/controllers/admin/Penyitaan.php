@@ -89,13 +89,14 @@ class penyitaan extends CI_Controller
 			$temp = (array)$record;
 			$temp['no'] = ++$num_start_row;
 			$temp['created_at'] = $penyitaan->created_at_text;
-			$temp['penyidik'] = '';
+			$temp['penyidik'] = '<div><b>Data Penyidik</b></div>';
 			$temp['penyidik'] .= "<div>Nama : $penyitaan->nama_penyidik</div>";
 			$temp['penyidik'] .= "<div>NIP/NRP : $penyitaan->nip_nrp</div>";
 			$temp['penyidik'] .= "<div>No WA : $penyitaan->nomor_telepon_wa</div>";
 			$temp['penyidik'] .= "<div>Email : $penyitaan->email</div>";
 			$temp['penyidik'] .= "<br>";
 
+			$temp['penyidik'] .= '<div><b>Data Berkas</b></div>';
 			$files = "";
 			if (is_array($penyitaan->files_json)) {
 				foreach ($penyitaan->files_json as $key => $val) {
@@ -104,7 +105,7 @@ class penyitaan extends CI_Controller
 			}
 			$temp['penyidik'] .= $files;
 
-			$temp['pihak'] = '';
+			$temp['pihak'] = '<div><b>Data Pihak</b></div>';
 			$temp['pihak'] .= "<div>Nama : $penyitaan->nama_pihak</div>";
 
 			$temp['aksi'] = '';

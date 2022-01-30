@@ -89,7 +89,7 @@ class penggeledahan extends CI_Controller
 			$temp = (array)$record;
 			$temp['no'] = ++$num_start_row;
 			$temp['created_at'] = $penggeledahan->created_at_text;
-			$temp['penyidik'] = 'Data Penyidik';
+			$temp['penyidik'] = '<div><b>Data Penyidik</b></div>';
 			$temp['penyidik'] .= "<div>Nama : $penggeledahan->nama_penyidik</div>";
 			$temp['penyidik'] .= "<div>NIP/NRP : $penggeledahan->nip_nrp</div>";
 			$temp['penyidik'] .= "<div>No WA : $penggeledahan->nomor_telepon_wa</div>";
@@ -97,6 +97,7 @@ class penggeledahan extends CI_Controller
 			$temp['penyidik'] .= "<br>";
 
 
+			$temp['penyidik'] .= '<div><b>Data Berkas</b></div>';
 			$files = "";
 			if (is_array($penggeledahan->files_json)) {
 				foreach ($penggeledahan->files_json as $key => $val) {
@@ -105,7 +106,7 @@ class penggeledahan extends CI_Controller
 			}
 			$temp['penyidik'] .= $files;
 
-			$temp['pihak'] = 'Data Penyidik';
+			$temp['pihak'] = '<div><b>Data Pihak</b></div>';
 			$temp['pihak'] .= "<div>Nama : $penggeledahan->nama_pihak</div>";
 
 			$temp['aksi'] = '';
