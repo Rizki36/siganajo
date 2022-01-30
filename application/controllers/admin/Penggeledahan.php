@@ -75,6 +75,7 @@ class penggeledahan extends CI_Controller
 			'email',
 			'polres_polsek_pengaju',
 			'jenis_permohonan',
+			'nama_pihak',
 		];
 
 		## get data
@@ -93,6 +94,8 @@ class penggeledahan extends CI_Controller
 			$temp['penyidik'] .= "<div>NIP/NRP : $penggeledahan->nip_nrp</div>";
 			$temp['penyidik'] .= "<div>No WA : $penggeledahan->nomor_telepon_wa</div>";
 			$temp['penyidik'] .= "<div>Email : $penggeledahan->email</div>";
+			$temp['penyidik'] .= "<br>";
+
 
 			$files = "";
 			if (is_array($penggeledahan->files_json)) {
@@ -101,6 +104,9 @@ class penggeledahan extends CI_Controller
 				}
 			}
 			$temp['penyidik'] .= $files;
+
+			$temp['pihak'] = 'Data Penyidik';
+			$temp['pihak'] .= "<div>Nama : $penggeledahan->nama_pihak</div>";
 
 			$temp['aksi'] = '';
 			$temp['aksi'] .= "<a style='text-decoration: none;' href='" . base_url('admin/penggeledahan/print/' . base64_encode($penggeledahan->id_penggeledahan))  . "' class='btn btn-block btn-sm btn-primary'>Cetak File</a>";
