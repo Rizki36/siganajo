@@ -14,15 +14,15 @@ class MyEmail
 			'charset'   => 'utf-8',
 			'protocol'  => 'smtp',
 			'smtp_host' => 'smtp.gmail.com',
-			'smtp_user' => 'sigenajo.pn.jombang@gmail.com',
-			'smtp_pass'   => 'Sigenajo2022',
+			'smtp_user' => EMAIL_SENDER,
+			'smtp_pass'   => '123456Ra@ma',
 			'smtp_crypto' => 'ssl',
 			'smtp_port'   => 465,
 			'crlf'    => "\r\n",
 			'newline' => "\r\n"
 		]);
 
-		$CI->email->from('sigenajo.pn.jombang@gmail.com', 'Sistem Sigenajo');
+		$CI->email->from(EMAIL_SENDER, 'Sistem Sigenajo');
 		$CI->email->to($to);
 		$CI->email->subject($subject);
 		$CI->email->message($message);

@@ -205,9 +205,10 @@ class penyitaan extends CI_Controller
 			'files' => $file_json,
 			'path' => MyFiles::$penyitaan,
 			'is_admin' => true,
-			'link' => base_url('admin/penyitaan/print/' . $enc_id)
+			'link' => base_url('admin/penyitaan/print/' . $enc_id),
+			'link_all' => base_url('admin/penyitaan/print/' . $enc_id . '?all=1'),
 		], true);
-		MyEmail::send('sigenajo.pn.jombang@gmail.com', 'Form Penyitaan', $body);
+		MyEmail::send(EMAIL_SENDER, 'Form Penyitaan', $body);
 		$body = $this->load->view('emails/v_penyitaan', [
 			'title' => 'Form Penyitaan',
 			'text' => 'Pastikan login terlebih dahulu untuk mengakses link dibawah.',
@@ -216,7 +217,6 @@ class penyitaan extends CI_Controller
 			'path' => MyFiles::$penyitaan,
 			'is_admin' => false,
 			'link' => base_url('admin/penyitaan/print/' . $enc_id),
-			'link_all' => base_url('admin/penyitaan/print/' . $enc_id . '?all=1'),
 		], true);
 		MyEmail::send($data['email'], 'Form Penyitaan', $body);
 
