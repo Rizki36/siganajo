@@ -54,7 +54,7 @@ class M_Perpanjangan extends MY_Model
 			case 'jenis_kelamin':
 				return 'Jenis Kelamin';
 			case 'tempat_tinggal':
-				return 'Tampat Tinggal';
+				return 'Tempat Tinggal';
 			case 'pekerjaan':
 				return 'Pekerjaan';
 			case 'agama':
