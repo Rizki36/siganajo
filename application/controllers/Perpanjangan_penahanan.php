@@ -56,6 +56,19 @@ class perpanjangan_penahanan extends CI_Controller
 				['value' => 'Mabes Polri/Polda/Kejaksaan/Penyidik PNS', 'label' => 'Mabes Polri/Polda/Kejaksaan/Penyidik PNS'],
 				['value' => 'Lain-lain', 'label' => 'Lain-lain'],
 			],
+			'attr' => [
+				'required',
+				'x-model' => 'polres_polsek_pengaju'
+			]
+		];
+
+		$step1Form['polres_polsek_pengaju_lain'] = [
+			'attr_container' => [
+				'x-show' => "polres_polsek_pengaju === 'Lain-lain'"
+			],
+			'class_container' => 'col-6',
+			'type' => 'text',
+			'label' => 'Polres Polsek Lain',
 			'attr' => ['required']
 		];
 
@@ -114,7 +127,8 @@ class perpanjangan_penahanan extends CI_Controller
 					'header_with_bg' => true,
 					'steps' => $steps,
 					'data_alpine' => [
-						'jenis_permohonan' => ''
+						'jenis_permohonan' => '',
+						'polres_polsek_pengaju' => ''
 					]
 				],
 				true
@@ -139,6 +153,9 @@ class perpanjangan_penahanan extends CI_Controller
 		$this->form_validation->set_rules('pekerjaan', M_Perpanjangan::get_label('pekerjaan'), 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('agama', M_Perpanjangan::get_label('agama'), 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('kebangsaan', M_Perpanjangan::get_label('kebangsaan'), 'trim|required|min_length[3]');
+		if ($_POST['polres_polsek_pengaju'] === 'Lain-lain') {
+			$this->form_validation->set_rules('polres_polsek_pengaju_lain', 'Polres Polsek Pengaju', 'trim|required');
+		}
 
 		## validatoon error
 		if (!$this->form_validation->run()) {
@@ -169,6 +186,11 @@ class perpanjangan_penahanan extends CI_Controller
 			} catch (\Throwable $th) {
 				if ($inpName !== 'resume_singkat') setresponse(400, ['msg' => M_Perpanjangan::get_label($inpName) . ' : ' . $th->getMessage()]);
 			}
+		}
+
+		## replace value jika lain-lain
+		if ($_POST['polres_polsek_pengaju'] === 'Lain-lain') {
+			$_POST['polres_polsek_pengaju'] = $_POST['polres_polsek_pengaju_lain'];
 		}
 
 		$data = [

@@ -49,6 +49,19 @@ class penyitaan extends CI_Controller
 
 		$form1['polres_polsek_pengaju'] = [
 			'class_container' => 'col-6', 'type' => 'select', 'options' => $optionsPolres, 'label' => 'Polres Polsek Pengaju',
+			'attr' => [
+				'required',
+				'x-model' => 'polres_polsek_pengaju'
+			]
+		];
+
+		$form1['polres_polsek_pengaju_lain'] = [
+			'attr_container' => [
+				'x-show' => "polres_polsek_pengaju === 'Lain-lain'"
+			],
+			'class_container' => 'col-6',
+			'type' => 'text',
+			'label' => 'Polres Polsek Lain',
 			'attr' => ['required']
 		];
 
@@ -108,7 +121,8 @@ class penyitaan extends CI_Controller
 					'header_with_bg' => true,
 					'steps' => $steps,
 					'data_alpine' => [
-						'jenis_permohonan' => ''
+						'jenis_permohonan' => '',
+						'polres_polsek_pengaju' => ''
 					]
 				],
 				true
@@ -125,6 +139,9 @@ class penyitaan extends CI_Controller
 		$this->form_validation->set_rules('nomor_telepon_wa', 'Nomor Telepon WA', 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('polres_polsek_pengaju', 'Polres Polsek Pengaju', 'trim|required');
+		if ($_POST['polres_polsek_pengaju'] === 'Lain-lain') {
+			$this->form_validation->set_rules('polres_polsek_pengaju_lain', 'Polres Polsek Pengaju', 'trim|required');
+		}
 		$this->form_validation->set_rules('jenis_permohonan', 'Jenis Permohonan', 'trim|required');
 		$this->form_validation->set_rules('nama_pihak', 'Nama Pihak', 'trim|required|min_length[3]');
 
@@ -145,6 +162,9 @@ class penyitaan extends CI_Controller
 		$this->form_validation->set_rules('nomor_telepon_wa', 'Nomor Telepon WA', 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('polres_polsek_pengaju', 'Polres Polsek Pengaju', 'trim|required');
+		if ($_POST['polres_polsek_pengaju'] === 'Lain-lain') {
+			$this->form_validation->set_rules('polres_polsek_pengaju_lain', 'Polres Polsek Pengaju', 'trim|required');
+		}
 		$this->form_validation->set_rules('jenis_permohonan', 'Jenis Permohonan', 'trim|required');
 		$this->form_validation->set_rules('nama_pihak', 'Nama Pihak', 'trim|required|min_length[3]');
 
@@ -152,6 +172,11 @@ class penyitaan extends CI_Controller
 		if (!$this->form_validation->run()) setresponse(400, [
 			'validation' => $this->form_validation->error_array()
 		]);
+
+		## replace value jika lain-lain
+		if ($_POST['polres_polsek_pengaju'] === 'Lain-lain') {
+			$_POST['polres_polsek_pengaju'] = $_POST['polres_polsek_pengaju_lain'];
+		}
 
 		## upload file
 		if ($_POST['jenis_permohonan'] === 'Izin Penyitaan') {
