@@ -24,7 +24,8 @@
 													}
 													$txt_required = $is_required ? '<span class="text-danger">*</span>' : '';
 													?>
-													<div class="form-group <?= @$item['class_container'] ?>">
+
+													<div class="form-group <?= @$item['class_container'] ?>" <?php if (isset($item['attr_container'])) foreach ($item['attr_container'] as $keyContainerAttr => $containerAttr) : ?> <?= is_numeric($keyContainerAttr) ? $containerAttr : $keyContainerAttr . '="' .	$containerAttr . '"' ?> <?php endforeach ?>>
 														<?php if ($item['type'] === 'select') : ?>
 															<label class="d-block text-left" for="<?= $key ?>"><?= $item['label'] ?> <?= $txt_required ?></label>
 															<select class="form-control" name="<?= $key ?>" id="<?= $key ?>" <?php if (isset($item['attr'])) foreach ($item['attr'] as $keyAttr => $attr) : ?> <?= is_numeric($keyAttr) ? $attr : $keyAttr . '="' .	$attr . '"' ?> <?php endforeach ?>>

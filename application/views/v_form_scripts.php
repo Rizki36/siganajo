@@ -7,9 +7,6 @@
 		return {
 			curStep: 0,
 			totalStep: <?= json_decode(count($steps)) ?>,
-			<?php foreach ($data_alpine as $key => $value) : ?>
-				<?= $key ?>: '<?= $value ?>'
-			<?php endforeach ?>,
 			async next() {
 				reset_validation()
 				<?php $index = 0 ?>
@@ -60,7 +57,10 @@
 			},
 			async back() {
 				this.curStep = this.curStep - 1
-			}
+			},
+			<?php foreach ($data_alpine as $key => $value) : ?>
+				<?= $key ?>: '<?= $value ?>',
+			<?php endforeach ?>
 		}
 	}
 </script>
