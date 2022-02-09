@@ -109,6 +109,106 @@
 <!-- end of details -->
 
 
+<!-- Pricing -->
+<div id="balasan" class="cards-2">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<h2 class="h2-heading">Balasan</h2>
+			</div> <!-- end of col -->
+		</div> <!-- end of row -->
+		<div class="row">
+			<div class="col-lg-12">
+				<?php
+				$list_detail = [
+					[
+						'link' => base_url('balasan/penyitaan?s=unread'),
+						'count' => 1,
+						'title' => 'Penyitaan',
+						'text_class_color' => 'text-warning',
+						'desc' => 'Belum Dibalas'
+					],
+					[
+						'link' => base_url('balasan/penyitaan?s=accept'),
+						'count' => 1,
+						'title' => 'Penyitaan',
+						'text_class_color' => 'text-success',
+						'desc' => 'Diterima'
+					],
+					[
+						'link' => base_url('balasan/penyitaan?s=rejected'),
+						'count' => 1,
+						'title' => 'Penyitaan',
+						'text_class_color' => 'text-danger',
+						'desc' => 'Ditolak'
+					],
+					// 
+					[
+						'link' => base_url('balasan/penggeledahan?s=unread'),
+						'count' => 1,
+						'title' => 'Penggeledahan',
+						'text_class_color' => 'text-warning',
+						'desc' => 'Belum Dibalas'
+					],
+					[
+						'link' => base_url('balasan/penggeledahan?s=accept'),
+						'count' => 1,
+						'title' => 'Penggeledahan',
+						'text_class_color' => 'text-success',
+						'desc' => 'Diterima'
+					],
+					[
+						'link' => base_url('balasan/penggeledahan?s=rejected'),
+						'count' => 1,
+						'title' => 'Penggeledahan',
+						'text_class_color' => 'text-danger',
+						'desc' => 'Ditolak'
+					],
+					// 
+					[
+						'link' => base_url('balasan/perpanjangan-penahanan?s=unread'),
+						'count' => 1,
+						'title' => 'Perpanjangan Penahanan',
+						'text_class_color' => 'text-warning',
+						'desc' => 'Belum Dibalas'
+					],
+					[
+						'link' => base_url('balasan/perpanjangan-penahanan?s=accept'),
+						'count' => 1,
+						'title' => 'Perpanjangan Penahanan',
+						'text_class_color' => 'text-success',
+						'desc' => 'Diterima'
+					],
+					[
+						'link' => base_url('balasan/perpanjangan-penahanan?s=rejected'),
+						'count' => 1,
+						'title' => 'Perpanjangan Penahanan',
+						'text_class_color' => 'text-danger',
+						'desc' => 'Ditolak'
+					],
+				]
+				?>
+				<?php foreach ($list_detail as $item) : ?>
+					<a href="<?= $item['link'] ?>">
+						<!-- Card-->
+						<div class="card">
+							<div class="card-body">
+								<h4><span class="value"><?= $item['title'] ?></span></h4>
+								<div class="divider"></div>
+								<div class="price"><span class="value <?= $item['text_class_color'] ?>"><?= $item['count'] ?></span></div>
+								<h4><span class="value"><?= $item['desc'] ?></span></h4>
+							</div>
+						</div> <!-- end of card -->
+						<!-- end of card -->
+					</a>
+				<?php endforeach ?>
+
+			</div> <!-- end of col -->
+		</div> <!-- end of row -->
+	</div> <!-- end of container -->
+</div> <!-- end of cards-2 -->
+<!-- end of pricing -->
+
 <!-- Video -->
 <div id="tutorial" class="basic-2">
 	<div class="container">

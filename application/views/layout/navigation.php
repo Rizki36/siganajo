@@ -49,6 +49,10 @@
     					<!-- end of dropdown menu -->
 
     					<li class="nav-item">
+    						<a class="nav-link page-scroll" href="#balasan">Balasan</a>
+    					</li>
+
+    					<li class="nav-item">
     						<a class="nav-link page-scroll" href="#tutorial">Tutorial</a>
     					</li>
 

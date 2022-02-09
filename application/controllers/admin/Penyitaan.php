@@ -8,6 +8,7 @@ class penyitaan extends CI_Controller
 		parent::__construct();
 		if (!Auth::has_access(User_Role::admin)) redirect('login/admin');
 		$this->load->model('M_Penyitaan');
+		$this->load->library('form_validation');
 	}
 
 	public function index()
@@ -38,6 +39,9 @@ class penyitaan extends CI_Controller
 
 		if ($_POST['status'] === 'read') $configData['where'][] = ['is_dibaca' => 1];
 		if ($_POST['status'] === 'unread') $configData['where'][] = ['is_dibaca' => 0];
+		if ($_POST['status'] === 'uploaded') $configData['where'][] = "upload IS NOT NULL";
+		if ($_POST['status'] === 'rejected') $configData['where'][] = "alasan_ditolak IS NOT NULL";
+
 		## join
 		// $configData['join'] = [
 		// 	[
@@ -112,9 +116,18 @@ class penyitaan extends CI_Controller
 			$temp['aksi'] .= "<a style='text-decoration: none;' href='" . base_url('admin/penyitaan/print/' . base64_encode($penyitaan->id_penyitaan))  . "' class='btn btn-block btn-sm btn-primary'>Cetak File</a>";
 
 			if ($penyitaan->is_dibaca) {
-				$temp['aksi'] .= "<button onclick='mark_read($penyitaan->id_penyitaan,0)' class='btn btn-block btn-sm btn-primary'>Tandai <br> Belum Dibaca</button>";
+				if ($penyitaan->alasan_ditolak != '') {
+					$temp['aksi'] .= "<button onclick='detail_tolak($penyitaan->id_penyitaan)' class='btn btn-block btn-sm btn-primary'>Detail Tolak</button>";
+					$temp['aksi'] .= "<button onclick='reset($penyitaan->id_penyitaan)' class='btn btn-block btn-sm btn-primary'>Batalkan Tolak</button>";
+				}
+
+				if ($penyitaan->upload != '') {
+					$temp['aksi'] .= "<a style='text-decoration: none;' href='" . base_url(MyFiles::$penyitaan . '/' . $penyitaan->upload) . "' class='btn btn-block btn-sm btn-primary'>Detail Upload</a>";
+					$temp['aksi'] .= "<button onclick='reset($penyitaan->id_penyitaan)' class='btn btn-block btn-sm btn-primary'>Batalkan Upload</button>";
+				}
 			} else {
-				$temp['aksi'] .= "<button onclick='mark_read($penyitaan->id_penyitaan,1)' class='btn btn-block btn-sm btn-primary'>Tandai <br> Sudah Dibaca</button>";
+				$temp['aksi'] .= "<button onclick='tolak($penyitaan->id_penyitaan)' class='btn btn-block btn-sm btn-primary'>Tolak</button>";
+				$temp['aksi'] .= "<button onclick='upload($penyitaan->id_penyitaan)' class='btn btn-block btn-sm btn-primary'>Upload</button>";
 			}
 
 			$data['data'][] = $temp;
@@ -169,5 +182,131 @@ class penyitaan extends CI_Controller
 		$res = $m_penyitaan->update(['is_dibaca' => 1], ['id_penyitaan' => $id]);
 		if (!$res) setresponse(400, []);
 		setresponse(200, []);
+	}
+
+	public function tolak()
+	{
+		$id = filter_xss($_POST['id']);
+		$nomor_surat = protect_input_xss(escape($_POST['nomor_surat']));
+		$alasan_ditolak = $_POST['alasan_ditolak'];
+
+		## validation rule
+		$this->form_validation->set_rules('id', 'ID', 'trim|required');
+		$this->form_validation->set_rules('nomor_surat', 'Nomor Surat', 'trim|required|min_length[1]');
+		$this->form_validation->set_rules('alasan_ditolak', 'Alasan Ditolak', 'trim|required|min_length[1]');
+
+		## validation error
+		if (!$this->form_validation->run()) {
+			$errors = '';
+			foreach ($this->form_validation->error_array() as $key => $value) {
+				$errors .= $value . '<br>';
+			}
+			setresponse(400, [
+				'msg' => $errors
+			]);
+		}
+
+		$m_penyitaan = new M_Penyitaan();
+		$is_updated = $m_penyitaan->update([
+			'nomor_surat' => $nomor_surat,
+			'alasan_ditolak' => $alasan_ditolak,
+			'is_dibaca' => 1
+		], [
+			'id_penyitaan' => $id
+		]);
+
+		if (!$is_updated) setresponse(400, [
+			'msg' => 'Aksi gagal'
+		]);
+
+		setresponse(200, [
+			'msg' => 'Aksi berhasil'
+		]);
+	}
+
+	public function detail_tolak()
+	{
+		$id = filter_xss($_POST['id']);
+
+		$m_penyitaan = new M_Penyitaan();
+		$data = $m_penyitaan->getOne('*', [
+			'id_penyitaan' => $id
+		]);
+
+		if (!$data) setresponse(404, [
+			'msg' => 'Data tidak ada'
+		]);
+
+		setresponse(200, [
+			'msg' => 'Aksi berhasil',
+			'data' => $data
+		]);
+	}
+
+	public function upload()
+	{
+		$id = filter_xss($_POST['id']);
+
+		if ($_FILES['upload']['name'] == '') {
+			setresponse(400, [
+				'msg' => 'File belum diisi'
+			]);
+		}
+
+		## validation rule
+		$this->form_validation->set_rules('id', 'ID', 'trim|required');
+
+		## validation error
+		if (!$this->form_validation->run()) {
+			$errors = '';
+			foreach ($this->form_validation->error_array() as $key => $value) {
+				$errors .= $value . '<br>';
+			}
+			setresponse(400, [
+				'msg' => $errors
+			]);
+		}
+
+		$time = time();
+		$filename = MyFiles::upload('upload', $time .  '_' . 'upload', MyFiles::$penyitaan);
+
+		$m_penyitaan = new M_Penyitaan();
+		$is_updated = $m_penyitaan->update([
+			'upload' => $filename,
+			'is_dibaca' => 1
+		], [
+			'id_penyitaan' => $id
+		]);
+
+		if (!$is_updated) setresponse(400, [
+			'msg' => 'Aksi gagal'
+		]);
+
+		setresponse(200, [
+			'msg' => 'Aksi berhasil'
+		]);
+	}
+
+	public function reset()
+	{
+		$id = filter_xss($_POST['id']);
+		$m_penyitaan = new M_Penyitaan();
+
+		$is_updated = $m_penyitaan->update([
+			'nomor_surat' => null,
+			'alasan_ditolak' => null,
+			'upload' => null,
+			'is_dibaca' => 0
+		], [
+			'id_penyitaan' => $id
+		]);
+
+		if (!$is_updated) setresponse(400, [
+			'msg' => 'Aksi gagal'
+		]);
+
+		setresponse(200, [
+			'msg' => 'Aksi berhasil'
+		]);
 	}
 }
