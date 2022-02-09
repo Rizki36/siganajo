@@ -93,7 +93,13 @@ class Penyitaan_DTO
 	public $files_json;
 	public $created_at;
 	public $is_dibaca;
+	public $alasan_ditolak;
+	public $nomor_surat;
+	public $upload;
+
+	// custom
 	public $created_at_text;
+
 
 	public function __construct($data)
 	{
@@ -109,6 +115,11 @@ class Penyitaan_DTO
 		$this->files_json = json_decode(@$data->files_json, true);
 		$this->created_at = @$data->created_at;
 		$this->is_dibaca = (int)@$data->is_dibaca === 1;
+
+		$this->alasan_ditolak = $data->alasan_ditolak;
+		$this->nomor_surat = $data->nomor_surat;
+		$this->upload = $data->upload;
+
 		$this->created_at_text = date('d-m-Y', strtotime(@$data->created_at));
 	}
 }
