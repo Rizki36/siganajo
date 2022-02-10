@@ -8,11 +8,14 @@ class welcome extends CI_Controller
 		parent::__construct();
 		if (!Auth::has_access(User_Role::user)) redirect('login');
 		$this->load->model('M_Setting');
+		$this->load->model('M_Penyitaan');
 	}
 
 	public function index()
 	{
 		$m_setting = new M_Setting();
+		$m_penyitaan = new M_Penyitaan();
+		$id = @$_SESSION['user_id'];
 
 		$this->load->view('layout', [
 			'main' => $this->load->view(
@@ -34,6 +37,13 @@ class welcome extends CI_Controller
 						'whatsapp' => $m_setting->getByKey('sosmed_whatsapp'),
 						'facebook' => $m_setting->getByKey('sosmed_facebook'),
 						'twitter' => $m_setting->getByKey('sosmed_twitter'),
+					],
+					'balasan' => [
+						'penyitaan' => [
+							'unread' => $m_penyitaan->count_unread($id),
+							'accepted' => $m_penyitaan->count_accepted($id),
+							'rejected' => $m_penyitaan->count_rejected($id),
+						]
 					],
 					'quotes' => $m_setting->getByKey('quotes'),
 					'link_tutorial_yt' => $m_setting->getByKey('quotes'),

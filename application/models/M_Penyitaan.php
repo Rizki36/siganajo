@@ -14,14 +14,56 @@ class M_Penyitaan extends MY_Model
 	}
 
 	/**
-	 * Undocumented function
-	 *
 	 * @param bool $is_dibaca
 	 * @return int
 	 */
 	public function get_count_read($is_dibaca)
 	{
 		return $this->getOne('count(id_penyitaan) as jml', ['is_dibaca' => $is_dibaca ? 1 : 0])->jml ?? 0;
+	}
+
+	/**
+	 * @param string $user_id
+	 * @return int
+	 */
+	public function count_read($user_id)
+	{
+		return $this->getOne('count(id_penyitaan) as jml', [
+			'is_dibaca' =>  1,
+			'user_id' => $user_id
+		])->jml ?? 0;
+	}
+
+	/**
+	 * @param string $user_id
+	 * @return int
+	 */
+	public function count_unread($user_id)
+	{
+		return $this->getOne('count(id_penyitaan) as jml', [
+			'is_dibaca' =>  0,
+			'user_id' => $user_id
+		])->jml ?? 0;
+	}
+	
+	/**
+	 * @param string $user_id
+	 * @return int
+	 */
+	public function count_rejected($user_id)
+	{
+		$where = "alasan_ditolak IS NOT NULL AND user_id = '$user_id'";
+		return $this->getOne('count(id_penyitaan) as jml', $where)->jml ?? 0;
+	}
+
+	/**
+	 * @param string $user_id
+	 * @return int
+	 */
+	public function count_accepted($user_id)
+	{
+		$where = "upload IS NOT NULL AND user_id = '$user_id'";
+		return $this->getOne('count(id_penyitaan) as jml', $where)->jml ?? 0;
 	}
 
 	public static function get_label($key)

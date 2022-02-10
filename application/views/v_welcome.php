@@ -123,21 +123,21 @@
 				$list_detail = [
 					[
 						'link' => base_url('balasan/penyitaan?s=unread'),
-						'count' => 1,
+						'count' => $balasan['penyitaan']['unread'],
 						'title' => 'Penyitaan',
 						'text_class_color' => 'text-warning',
 						'desc' => 'Belum Dibalas'
 					],
 					[
 						'link' => base_url('balasan/penyitaan?s=accepted'),
-						'count' => 1,
+						'count' => $balasan['penyitaan']['accepted'],
 						'title' => 'Penyitaan',
 						'text_class_color' => 'text-success',
 						'desc' => 'Diterima'
 					],
 					[
 						'link' => base_url('balasan/penyitaan?s=rejected'),
-						'count' => 1,
+						'count' => $balasan['penyitaan']['rejected'],
 						'title' => 'Penyitaan',
 						'text_class_color' => 'text-danger',
 						'desc' => 'Ditolak'
