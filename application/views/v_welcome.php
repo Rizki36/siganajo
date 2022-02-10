@@ -129,7 +129,7 @@
 						'desc' => 'Belum Dibalas'
 					],
 					[
-						'link' => base_url('balasan/penyitaan?s=accept'),
+						'link' => base_url('balasan/penyitaan?s=accepted'),
 						'count' => 1,
 						'title' => 'Penyitaan',
 						'text_class_color' => 'text-success',
@@ -151,7 +151,7 @@
 						'desc' => 'Belum Dibalas'
 					],
 					[
-						'link' => base_url('balasan/penggeledahan?s=accept'),
+						'link' => base_url('balasan/penggeledahan?s=accepted'),
 						'count' => 1,
 						'title' => 'Penggeledahan',
 						'text_class_color' => 'text-success',
@@ -173,7 +173,7 @@
 						'desc' => 'Belum Dibalas'
 					],
 					[
-						'link' => base_url('balasan/perpanjangan-penahanan?s=accept'),
+						'link' => base_url('balasan/perpanjangan-penahanan?s=accepted'),
 						'count' => 1,
 						'title' => 'Perpanjangan Penahanan',
 						'text_class_color' => 'text-success',

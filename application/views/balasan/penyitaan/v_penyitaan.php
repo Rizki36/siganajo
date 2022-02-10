@@ -13,8 +13,8 @@
 				<label for="r-unread" class="mr-3 label-radio">
 					Belum Dibalas
 				</label>
-				<input id="r-read" type="radio" class="input-filter input-radio mr-2" name="status" value="read" <?= $s === 'read' ? 'checked' : '' ?>>
-				<label for="r-read" class="mr-3 label-radio">
+				<input id="r-accepted" type="radio" class="input-filter input-radio mr-2" name="status" value="accepted" <?= $s === 'accepted' ? 'checked' : '' ?>>
+				<label for="r-accepted" class="mr-3 label-radio">
 					Diterima
 				</label>
 				<input id="r-rejected" type="radio" class="input-filter input-radio mr-2" name="status" value="rejected" <?= $s === 'rejected' ? 'checked' : '' ?>>

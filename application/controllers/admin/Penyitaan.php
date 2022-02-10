@@ -37,10 +37,6 @@ class penyitaan extends CI_Controller
 		## where -> has effect with total row
 		$configData['where'] = [];
 
-		if ($_POST['status'] === 'read') $configData['where'][] = ['is_dibaca' => 1];
-		if ($_POST['status'] === 'unread') $configData['where'][] = ['is_dibaca' => 0];
-		if ($_POST['status'] === 'uploaded') $configData['where'][] = "upload IS NOT NULL";
-		if ($_POST['status'] === 'rejected') $configData['where'][] = "alasan_ditolak IS NOT NULL";
 
 		## join
 		// $configData['join'] = [
@@ -54,6 +50,11 @@ class penyitaan extends CI_Controller
 
 		## custom filter -> has effect with total filtered row 
 		$configData['filters'] = [];
+		if ($_POST['status'] === 'read') $configData['filters'][] = ['is_dibaca' => 1];
+		if ($_POST['status'] === 'unread') $configData['filters'][] = ['is_dibaca' => 0];
+		if ($_POST['status'] === 'uploaded') $configData['filters'][] = "upload IS NOT NULL";
+		if ($_POST['status'] === 'accepted') $configData['filters'][] = "upload IS NOT NULL";
+		if ($_POST['status'] === 'rejected') $configData['filters'][] = "alasan_ditolak IS NOT NULL";
 
 		## group by
 		// $configData['group_by'] = 'awb_no';
@@ -219,6 +220,19 @@ class penyitaan extends CI_Controller
 			'msg' => 'Aksi gagal'
 		]);
 
+		$data = $m_penyitaan->getOne('*', ['id_penyitaan' => $id]);
+		$penyitaan = new Penyitaan_DTO($data);
+
+		$this->load->library('MyEmail');
+		$body = $this->load->view('emails/balasan/v_penyitaan_ditolak', [
+			'title' => 'Pengajuan Penyitaan Ditolak',
+			'text' => 'Pastikan login terlebih dahulu',
+			'nomor_surat' => $nomor_surat,
+			'alasan_ditolak' => $alasan_ditolak,
+			'link_detail' => base_url('balasan/penyitaan?s=rejected'),
+		], true);
+		MyEmail::send($penyitaan->email, 'Penyitaan Ditolak', $body);
+
 		setresponse(200, [
 			'msg' => 'Aksi berhasil'
 		]);
@@ -281,6 +295,18 @@ class penyitaan extends CI_Controller
 		if (!$is_updated) setresponse(400, [
 			'msg' => 'Aksi gagal'
 		]);
+
+		$data = $m_penyitaan->getOne('*', ['id_penyitaan' => $id]);
+		$penyitaan = new Penyitaan_DTO($data);
+
+		$this->load->library('MyEmail');
+		$body = $this->load->view('emails/balasan/v_penyitaan_diterima', [
+			'title' => 'Pengajuan Penyitaan Diterima',
+			'text' => 'Pastikan login terlebih dahulu',
+			'link_download' => base_url(MyFiles::$penyitaan . '/' . $filename),
+			'link_detail' => base_url('balasan/penyitaan?s=accepted'),
+		], true);
+		MyEmail::send($penyitaan->email, 'Penyitaan Diterima', $body);
 
 		setresponse(200, [
 			'msg' => 'Aksi berhasil'

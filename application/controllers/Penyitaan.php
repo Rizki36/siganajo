@@ -6,6 +6,7 @@ class penyitaan extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+		if (!Auth::has_access(User_Role::user)) redirect('login');
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 		$this->load->model('M_Penyitaan');

@@ -109,6 +109,8 @@
 				alasan_ditolak
 			} = formValues
 
+			swal_loading()
+
 			$.ajax({
 				type: "POST",
 				url: "<?= base_url('admin/penyitaan/tolak') ?>",
@@ -121,6 +123,7 @@
 			}).then(res => {
 				console.log(res);
 				$datatable.ajax.reload()
+				swal_close(0);
 			}).fail(e => common_error(e))
 		}
 	}
@@ -184,6 +187,8 @@
 			formData.append('id', id)
 			formData.append('upload', upload[0])
 
+			swal_loading()
+
 			$.ajax({
 				type: "POST",
 				url: "<?= base_url('admin/penyitaan/upload') ?>",
@@ -195,6 +200,7 @@
 			}).then(res => {
 				console.log(res);
 				$datatable.ajax.reload()
+				swal_close(0);
 			}).fail(e => common_error(e))
 		}
 	}

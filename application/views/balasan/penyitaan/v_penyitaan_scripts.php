@@ -54,4 +54,35 @@
 	$(".input-filter").on('change', function(e) {
 		$datatable.ajax.reload()
 	})
+
+	function detail_tolak(id) {
+		$.ajax({
+			type: "POST",
+			url: "<?= base_url('balasan/penyitaan/detail_tolak') ?>",
+			data: {
+				id
+			},
+			dataType: "json"
+		}).then(res => {
+			Swal.fire({
+				title: 'Detail Penolakan',
+				width: 900,
+				html: `
+				<div class="form-group">
+					<label>Nomor Surat</label>
+					<input id="nomor_surat" readonly name="nomor_surat" type="text" value="${res?.data?.nomor_surat}" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>Alasan</label>
+					<textarea id="alasan_ditolak" readonly name="alasan_ditolak" class="form-control">${res?.data?.alasan_ditolak}</textarea>
+				</div>
+				`,
+				focusConfirm: false,
+				customClass: {
+					container: 'text-left',
+					htmlContainer: 'text-left',
+				},
+			})
+		}).fail(e => common_error(e))
+	}
 </script>

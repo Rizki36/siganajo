@@ -6,6 +6,7 @@ class penyitaan extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+		if (!Auth::has_access(User_Role::user)) redirect('login');
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 		$this->load->model('M_Penyitaan');
@@ -55,6 +56,8 @@ class penyitaan extends CI_Controller
 
 		if ($_POST['status'] === 'read') $configData['filters'][] = ['is_dibaca' => 1];
 		if ($_POST['status'] === 'unread') $configData['filters'][] = ['is_dibaca' => 0];
+		if ($_POST['status'] === 'uploaded') $configData['filters'][] = "upload IS NOT NULL";
+		if ($_POST['status'] === 'accepted') $configData['filters'][] = "upload IS NOT NULL";
 		if ($_POST['status'] === 'rejected') $configData['filters'][] = "alasan_ditolak IS NOT NULL";
 
 
@@ -117,10 +120,40 @@ class penyitaan extends CI_Controller
 
 			$temp['aksi'] = '';
 
+			if ($penyitaan->is_dibaca) {
+				if ($penyitaan->alasan_ditolak != '') {
+					$temp['aksi'] .= "<button onclick='detail_tolak($penyitaan->id_penyitaan)' class='btn btn-block btn-sm btn-primary'>Detail Tolak</button>";
+				}
+
+				if ($penyitaan->upload != '') {
+					$temp['aksi'] .= "<a style='text-decoration: none;' href='" . base_url(MyFiles::$penyitaan . '/' . $penyitaan->upload) . "' class='btn btn-block btn-sm btn-primary'>Detail Upload</a>";
+				}
+			} else {
+			}
+
 			$data['data'][] = $temp;
 		}
 
 		unset($data['records']);
 		echo json_encode($data);
+	}
+
+	public function detail_tolak()
+	{
+		$id = filter_xss($_POST['id']);
+
+		$m_penyitaan = new M_Penyitaan();
+		$data = $m_penyitaan->getOne('*', [
+			'id_penyitaan' => $id
+		]);
+
+		if (!$data) setresponse(404, [
+			'msg' => 'Data tidak ada'
+		]);
+
+		setresponse(200, [
+			'msg' => 'Aksi berhasil',
+			'data' => $data
+		]);
 	}
 }
