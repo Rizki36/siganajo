@@ -9,17 +9,24 @@ class welcome extends CI_Controller
 		if (!Auth::has_access(User_Role::user)) redirect('login');
 		$this->load->model('M_Setting');
 		$this->load->model('M_Penyitaan');
+		$this->load->model('M_Penggeledahan');
 	}
 
 	public function index()
 	{
 		$m_setting = new M_Setting();
 		$m_penyitaan = new M_Penyitaan();
+		$m_penggeledahan = new M_Penggeledahan();
+
 		$id = @$_SESSION['user_id'];
 
 		$penyitaan_unread = $m_penyitaan->count_unread($id);
 		$penyitaan_accepted = $m_penyitaan->count_accepted($id);
 		$penyitaan_rejected = $m_penyitaan->count_rejected($id);
+
+		$penggeledahan_unread = $m_penggeledahan->count_unread($id);
+		$penggeledahan_accepted = $m_penggeledahan->count_accepted($id);
+		$penggeledahan_rejected = $m_penggeledahan->count_rejected($id);
 
 		$this->load->view('layout', [
 			'main' => $this->load->view(
@@ -47,9 +54,14 @@ class welcome extends CI_Controller
 							'unread' => $penyitaan_unread,
 							'accepted' => $penyitaan_accepted,
 							'rejected' => $penyitaan_rejected,
-						]
+						],
+						'penggeledahan' => [
+							'unread' => $penggeledahan_unread,
+							'accepted' => $penggeledahan_accepted,
+							'rejected' => $penggeledahan_rejected,
+						],
 					],
-					'jumlah_balasan' => ($penyitaan_accepted + $penyitaan_rejected),
+					'jumlah_balasan' => ($penyitaan_accepted + $penyitaan_rejected) + ($penggeledahan_accepted + $penggeledahan_rejected),
 					'quotes' => $m_setting->getByKey('quotes'),
 					'link_tutorial_yt' => $m_setting->getByKey('quotes'),
 					'marquee' => $m_setting->getByKey('marquee'),

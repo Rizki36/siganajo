@@ -145,21 +145,21 @@
 					// 
 					[
 						'link' => base_url('balasan/penggeledahan?s=unread'),
-						'count' => 1,
+						'count' => $balasan['penggeledahan']['unread'],
 						'title' => 'Penggeledahan',
 						'text_class_color' => 'text-warning',
 						'desc' => 'Belum Dibalas'
 					],
 					[
 						'link' => base_url('balasan/penggeledahan?s=accepted'),
-						'count' => 1,
+						'count' => $balasan['penggeledahan']['accepted'],
 						'title' => 'Penggeledahan',
 						'text_class_color' => 'text-success',
 						'desc' => 'Diterima'
 					],
 					[
 						'link' => base_url('balasan/penggeledahan?s=rejected'),
-						'count' => 1,
+						'count' => $balasan['penggeledahan']['rejected'],
 						'title' => 'Penggeledahan',
 						'text_class_color' => 'text-danger',
 						'desc' => 'Ditolak'

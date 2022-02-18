@@ -8,6 +8,7 @@ class penggeledahan extends CI_Controller
 		parent::__construct();
 		if (!Auth::has_access(User_Role::admin)) redirect('login/admin');
 		$this->load->model('M_Penggeledahan');
+		$this->load->library('form_validation');
 	}
 
 	public function index()
@@ -36,8 +37,7 @@ class penggeledahan extends CI_Controller
 		## where -> has effect with total row
 		$configData['where'] = [];
 
-		if ($_POST['status'] === 'read') $configData['where'][] = ['is_dibaca' => 1];
-		if ($_POST['status'] === 'unread') $configData['where'][] = ['is_dibaca' => 0];
+
 		## join
 		// $configData['join'] = [
 		// 	[
@@ -50,6 +50,11 @@ class penggeledahan extends CI_Controller
 
 		## custom filter -> has effect with total filtered row 
 		$configData['filters'] = [];
+		if ($_POST['status'] === 'read') $configData['filters'][] = ['is_dibaca' => 1];
+		if ($_POST['status'] === 'unread') $configData['filters'][] = ['is_dibaca' => 0];
+		if ($_POST['status'] === 'uploaded') $configData['filters'][] = "upload IS NOT NULL";
+		if ($_POST['status'] === 'accepted') $configData['filters'][] = "upload IS NOT NULL";
+		if ($_POST['status'] === 'rejected') $configData['filters'][] = "alasan_ditolak IS NOT NULL";
 
 		## group by
 		// $configData['group_by'] = 'awb_no';
@@ -111,10 +116,20 @@ class penggeledahan extends CI_Controller
 
 			$temp['aksi'] = '';
 			$temp['aksi'] .= "<a style='text-decoration: none;' href='" . base_url('admin/penggeledahan/print/' . base64_encode($penggeledahan->id_penggeledahan))  . "' class='btn btn-block btn-sm btn-primary'>Cetak File</a>";
+
 			if ($penggeledahan->is_dibaca) {
-				$temp['aksi'] .= "<button onclick='mark_read($penggeledahan->id_penggeledahan,0)' class='btn btn-block btn-sm btn-primary'>Tandai <br> Belum Dibaca</button>";
+				if ($penggeledahan->alasan_ditolak != '') {
+					$temp['aksi'] .= "<button onclick='detail_tolak($penggeledahan->id_penggeledahan)' class='btn btn-block btn-sm btn-primary'>Detail Tolak</button>";
+					$temp['aksi'] .= "<button onclick='reset($penggeledahan->id_penggeledahan)' class='btn btn-block btn-sm btn-primary'>Batalkan Tolak</button>";
+				}
+
+				if ($penggeledahan->upload != '') {
+					$temp['aksi'] .= "<a style='text-decoration: none;' href='" . base_url(MyFiles::$penggeledahan . '/' . $penggeledahan->upload) . "' class='btn btn-block btn-sm btn-primary'>Detail Upload</a>";
+					$temp['aksi'] .= "<button onclick='reset($penggeledahan->id_penggeledahan)' class='btn btn-block btn-sm btn-primary'>Batalkan Upload</button>";
+				}
 			} else {
-				$temp['aksi'] .= "<button onclick='mark_read($penggeledahan->id_penggeledahan,1)' class='btn btn-block btn-sm btn-primary'>Tandai <br> Sudah Dibaca</button>";
+				$temp['aksi'] .= "<button onclick='tolak($penggeledahan->id_penggeledahan)' class='btn btn-block btn-sm btn-primary'>Tolak</button>";
+				$temp['aksi'] .= "<button onclick='upload($penggeledahan->id_penggeledahan)' class='btn btn-block btn-sm btn-primary'>Upload</button>";
 			}
 
 			$data['data'][] = $temp;
@@ -169,5 +184,159 @@ class penggeledahan extends CI_Controller
 		$res = $m_penggeledahan->update(['is_dibaca' => $is_read], ['id_penggeledahan' => $id]);
 		if (!$res) setresponse(400, []);
 		setresponse(200, []);
+	}
+
+
+	public function tolak()
+	{
+		$id = filter_xss($_POST['id']);
+		$nomor_surat = protect_input_xss(escape($_POST['nomor_surat']));
+		$alasan_ditolak = $_POST['alasan_ditolak'];
+
+		## validation rule
+		$this->form_validation->set_rules('id', 'ID', 'trim|required');
+		$this->form_validation->set_rules('nomor_surat', 'Nomor Surat', 'trim|required|min_length[1]');
+		$this->form_validation->set_rules('alasan_ditolak', 'Alasan Ditolak', 'trim|required|min_length[1]');
+
+		## validation error
+		if (!$this->form_validation->run()) {
+			$errors = '';
+			foreach ($this->form_validation->error_array() as $key => $value) {
+				$errors .= $value . '<br>';
+			}
+			setresponse(400, [
+				'msg' => $errors
+			]);
+		}
+
+		$m_penggeledahan = new M_Penggeledahan();
+		$is_updated = $m_penggeledahan->update([
+			'nomor_surat' => $nomor_surat,
+			'alasan_ditolak' => $alasan_ditolak,
+			'is_dibaca' => 1
+		], [
+			'id_penggeledahan' => $id
+		]);
+
+		if (!$is_updated) setresponse(400, [
+			'msg' => 'Aksi gagal'
+		]);
+
+		$data = $m_penggeledahan->getOne('*', ['id_penggeledahan' => $id]);
+		$penggeledahan = new Penggeledahan_DTO($data);
+
+		$this->load->library('MyEmail');
+		$body = $this->load->view('emails/balasan/v_penggeledahan_ditolak', [
+			'title' => 'Pengajuan Penggeledahan Ditolak',
+			'text' => 'Pastikan login terlebih dahulu',
+			'nomor_surat' => $nomor_surat,
+			'alasan_ditolak' => $alasan_ditolak,
+			'link_detail' => base_url('balasan/penggeledahan?s=rejected'),
+		], true);
+		MyEmail::send($penggeledahan->email, 'Penggeledahan Ditolak', $body);
+
+		setresponse(200, [
+			'msg' => 'Aksi berhasil'
+		]);
+	}
+
+
+	public function detail_tolak()
+	{
+		$id = filter_xss($_POST['id']);
+
+		$m_penggeledahan = new M_Penggeledahan();
+		$data = $m_penggeledahan->getOne('*', [
+			'id_penggeledahan' => $id
+		]);
+
+		if (!$data) setresponse(404, [
+			'msg' => 'Data tidak ada'
+		]);
+
+		setresponse(200, [
+			'msg' => 'Aksi berhasil',
+			'data' => $data
+		]);
+	}
+
+
+	public function upload()
+	{
+		$id = filter_xss($_POST['id']);
+
+		if ($_FILES['upload']['name'] == '') {
+			setresponse(400, [
+				'msg' => 'File belum diisi'
+			]);
+		}
+
+		## validation rule
+		$this->form_validation->set_rules('id', 'ID', 'trim|required');
+
+		## validation error
+		if (!$this->form_validation->run()) {
+			$errors = '';
+			foreach ($this->form_validation->error_array() as $key => $value) {
+				$errors .= $value . '<br>';
+			}
+			setresponse(400, [
+				'msg' => $errors
+			]);
+		}
+
+		$time = time();
+		$filename = MyFiles::upload('upload', $time .  '_' . 'upload', MyFiles::$penggeledahan);
+
+		$m_penggeledahan = new M_Penggeledahan();
+		$is_updated = $m_penggeledahan->update([
+			'upload' => $filename,
+			'is_dibaca' => 1
+		], [
+			'id_penggeledahan' => $id
+		]);
+
+		if (!$is_updated) setresponse(400, [
+			'msg' => 'Aksi gagal'
+		]);
+
+		$data = $m_penggeledahan->getOne('*', ['id_penggeledahan' => $id]);
+		$penggeledahan = new Penggeledahan_DTO($data);
+
+		$this->load->library('MyEmail');
+		$body = $this->load->view('emails/balasan/v_penggeledahan_diterima', [
+			'title' => 'Pengajuan Penggeledahan Diterima',
+			'text' => 'Pastikan login terlebih dahulu',
+			'link_download' => base_url(MyFiles::$penggeledahan . '/' . $filename),
+			'link_detail' => base_url('balasan/penggeledahan?s=accepted'),
+		], true);
+		MyEmail::send($penggeledahan->email, 'Penggeledahan Diterima', $body);
+
+		setresponse(200, [
+			'msg' => 'Aksi berhasil'
+		]);
+	}
+
+	public function reset()
+	{
+		$id = filter_xss($_POST['id']);
+		$m_penggeledahan = new M_Penggeledahan();
+
+		$is_updated = $m_penggeledahan->update([
+			'nomor_surat' => null,
+			'alasan_ditolak' => null,
+			'upload' => null,
+			'is_dibaca' => 0
+		], [
+			'id_penggeledahan' => $id
+		]);
+
+		if (!$is_updated) setresponse(400, [
+			'msg' => 'Aksi gagal'
+		]);
+
+		setresponse(200, [
+			'msg' => 'Aksi berhasil'
+		]);
 	}
 }
