@@ -143,7 +143,6 @@ class penyitaan extends CI_Controller
 		$id = filter_xss(base64_decode($id));
 		$is_all_file = (int)@$_GET['all'] === 1;
 
-		$this->load->model('M_Penyitaan');
 		$m_penyitaan = new M_Penyitaan();
 
 		$data = $m_penyitaan->getOne('*', ['id_penyitaan' => $id]);
@@ -180,7 +179,8 @@ class penyitaan extends CI_Controller
 	{
 		$m_penyitaan = new M_Penyitaan();
 		$id = filter_xss($_POST['id']);
-		$res = $m_penyitaan->update(['is_dibaca' => 1], ['id_penyitaan' => $id]);
+		$is_read = (int)filter_xss($_POST['is_read']);
+		$res = $m_penyitaan->update(['is_dibaca' => $is_read], ['id_penyitaan' => $id]);
 		if (!$res) setresponse(400, []);
 		setresponse(200, []);
 	}
