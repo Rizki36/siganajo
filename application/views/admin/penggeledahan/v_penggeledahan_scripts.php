@@ -98,7 +98,7 @@
 			},
 			preConfirm: () => {
 				return {
-					nomor_surat: document.getElementById('nomor_surat').value,
+					nomor_surat_penolakan: document.getElementById('nomor_surat_penolakan').value,
 					alasan_ditolak: document.getElementById('alasan_ditolak').value
 				}
 			}
@@ -106,7 +106,7 @@
 
 		if (formValues) {
 			const {
-				nomor_surat,
+				nomor_surat_penolakan,
 				alasan_ditolak
 			} = formValues
 
@@ -117,7 +117,7 @@
 				url: "<?= base_url('admin/penggeledahan/tolak') ?>",
 				data: {
 					id,
-					nomor_surat,
+					nomor_surat_penolakan,
 					alasan_ditolak
 				},
 				dataType: "json"
@@ -145,7 +145,7 @@
 				html: `
 				<div class="form-group">
 					<label>Nomor Surat</label>
-					<input id="nomor_surat" readonly name="nomor_surat" type="text" value="${res?.data?.nomor_surat}" class="form-control">
+					<input id="nomor_surat_penolakan" readonly name="nomor_surat_penolakan" type="text" value="${res?.data?.nomor_surat_penolakan}" class="form-control">
 				</div>
 				<div class="form-group">
 					<label>Alasan</label>

@@ -140,7 +140,7 @@ class Penggeledahan_DTO
 	public $created_at;
 	public $is_dibaca;
 	public $alasan_ditolak;
-	public $nomor_surat;
+	public $nomor_surat_penolakan;
 	public $upload;
 
 	// custom
@@ -164,7 +164,7 @@ class Penggeledahan_DTO
 		$this->is_dibaca_user = (int)@$data->is_dibaca_user === 1;
 
 		$this->alasan_ditolak = $data->alasan_ditolak;
-		$this->nomor_surat = $data->nomor_surat;
+		$this->nomor_surat_penolakan = $data->nomor_surat_penolakan;
 		$this->upload = $data->upload;
 
 		$this->created_at_text = date('d-m-Y', strtotime(@$data->created_at));

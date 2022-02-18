@@ -46,7 +46,7 @@
 <template id="form-ditolak">
 	<div class="form-group">
 		<label>Nomor Surat Tolak</label>
-		<input id="nomor_surat_tolak" name="nomor_surat_tolak" type="text" class="form-control">
+		<input id="nomor_surat_penolakan" name="nomor_surat_penolakan" type="text" class="form-control">
 	</div>
 	<div class="form-group">
 		<label>Alasan</label>

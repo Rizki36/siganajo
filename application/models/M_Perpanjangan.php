@@ -183,7 +183,7 @@ class Perpanjangan_DTO
 	public $is_dibaca_user;
 
 	public $alasan_ditolak;
-	public $nomor_surat_tolak;
+	public $nomor_surat_penolakan;
 	public $upload;
 
 	public function __construct($data)
@@ -219,7 +219,7 @@ class Perpanjangan_DTO
 		$this->is_dibaca_user = (int)@$data->is_dibaca_user === 1;
 
 		$this->alasan_ditolak = $data->alasan_ditolak;
-		$this->nomor_surat_tolak = $data->nomor_surat_tolak;
+		$this->nomor_surat_penolakan = $data->nomor_surat_penolakan;
 		$this->upload = $data->upload;
 	}
 }

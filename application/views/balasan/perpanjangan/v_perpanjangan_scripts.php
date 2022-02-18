@@ -70,7 +70,7 @@
 				html: `
 				<div class="form-group">
 					<label>Nomor Surat</label>
-					<input id="nomor_surat_tolak" readonly name="nomor_surat_tolak" type="text" value="${res?.data?.nomor_surat_tolak}" class="form-control">
+					<input id="nomor_surat_penolakan" readonly name="nomor_surat_penolakan" type="text" value="${res?.data?.nomor_surat_penolakan}" class="form-control">
 				</div>
 				<div class="form-group">
 					<label>Alasan</label>

@@ -206,12 +206,12 @@ class perpanjangan_penahanan extends CI_Controller
 	public function tolak()
 	{
 		$id = filter_xss($_POST['id']);
-		$nomor_surat_tolak = protect_input_xss(escape($_POST['nomor_surat_tolak']));
+		$nomor_surat_penolakan = protect_input_xss(escape($_POST['nomor_surat_penolakan']));
 		$alasan_ditolak = $_POST['alasan_ditolak'];
 
 		## validation rule
 		$this->form_validation->set_rules('id', 'ID', 'trim|required');
-		$this->form_validation->set_rules('nomor_surat_tolak', 'Nomor Surat', 'trim|required|min_length[1]');
+		$this->form_validation->set_rules('nomor_surat_penolakan', 'Nomor Surat', 'trim|required|min_length[1]');
 		$this->form_validation->set_rules('alasan_ditolak', 'Alasan Ditolak', 'trim|required|min_length[1]');
 
 		## validation error
@@ -227,7 +227,7 @@ class perpanjangan_penahanan extends CI_Controller
 
 		$m_perpanjangan = new M_Perpanjangan();
 		$is_updated = $m_perpanjangan->update([
-			'nomor_surat_tolak' => $nomor_surat_tolak,
+			'nomor_surat_penolakan' => $nomor_surat_penolakan,
 			'alasan_ditolak' => $alasan_ditolak,
 			'is_dibaca' => 1
 		], [
@@ -245,7 +245,7 @@ class perpanjangan_penahanan extends CI_Controller
 		$body = $this->load->view('emails/balasan/v_perpanjangan_ditolak', [
 			'title' => 'Pengajuan Perpanjangan Penahanan Ditolak',
 			'text' => 'Pastikan login terlebih dahulu',
-			'nomor_surat_tolak' => $nomor_surat_tolak,
+			'nomor_surat_penolakan' => $nomor_surat_penolakan,
 			'alasan_ditolak' => $alasan_ditolak,
 			'link_detail' => base_url('balasan/perpanjangan-penahanan?s=rejected'),
 		], true);
@@ -337,7 +337,7 @@ class perpanjangan_penahanan extends CI_Controller
 		$m_perpanjangan = new M_Perpanjangan();
 
 		$is_updated = $m_perpanjangan->update([
-			'nomor_surat_tolak' => null,
+			'nomor_surat_penolakan' => null,
 			'alasan_ditolak' => null,
 			'upload' => null,
 			'is_dibaca' => 0
