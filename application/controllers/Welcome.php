@@ -10,6 +10,7 @@ class welcome extends CI_Controller
 		$this->load->model('M_Setting');
 		$this->load->model('M_Penyitaan');
 		$this->load->model('M_Penggeledahan');
+		$this->load->model('M_Perpanjangan');
 	}
 
 	public function index()
@@ -17,6 +18,7 @@ class welcome extends CI_Controller
 		$m_setting = new M_Setting();
 		$m_penyitaan = new M_Penyitaan();
 		$m_penggeledahan = new M_Penggeledahan();
+		$m_perpanjangan = new M_Perpanjangan();
 
 		$id = @$_SESSION['user_id'];
 
@@ -27,6 +29,10 @@ class welcome extends CI_Controller
 		$penggeledahan_unread = $m_penggeledahan->count_unread($id);
 		$penggeledahan_accepted = $m_penggeledahan->count_accepted($id);
 		$penggeledahan_rejected = $m_penggeledahan->count_rejected($id);
+
+		$perpanjangan_unread = $m_perpanjangan->count_unread($id);
+		$perpanjangan_accepted = $m_perpanjangan->count_accepted($id);
+		$perpanjangan_rejected = $m_perpanjangan->count_rejected($id);
 
 		$this->load->view('layout', [
 			'main' => $this->load->view(
@@ -60,8 +66,13 @@ class welcome extends CI_Controller
 							'accepted' => $penggeledahan_accepted,
 							'rejected' => $penggeledahan_rejected,
 						],
+						'perpanjangan' => [
+							'unread' => $perpanjangan_unread,
+							'accepted' => $perpanjangan_accepted,
+							'rejected' => $perpanjangan_rejected,
+						],
 					],
-					'jumlah_balasan' => ($penyitaan_accepted + $penyitaan_rejected) + ($penggeledahan_accepted + $penggeledahan_rejected),
+					'jumlah_balasan' => ($penyitaan_accepted + $penyitaan_rejected) + ($penggeledahan_accepted + $penggeledahan_rejected) + ($perpanjangan_accepted + $perpanjangan_rejected),
 					'quotes' => $m_setting->getByKey('quotes'),
 					'link_tutorial_yt' => $m_setting->getByKey('quotes'),
 					'marquee' => $m_setting->getByKey('marquee'),

@@ -10,13 +10,17 @@
 				<label for="r-semua" class="mr-3 label-radio">
 					Semua
 				</label>
-				<input id="r-read" type="radio" class="input-filter input-radio mr-2" name="status" value="read">
-				<label for="r-read" class="mr-3 label-radio">
-					Sudah Dibaca
-				</label>
 				<input id="r-unread" type="radio" class="input-filter input-radio mr-2" name="status" value="unread" checked>
 				<label for="r-unread" class="mr-3 label-radio">
 					Belum Dibaca
+				</label>
+				<input id="r-uploaded" type="radio" class="input-filter input-radio mr-2" name="status" value="uploaded">
+				<label for="r-uploaded" class="mr-3 label-radio">
+					Diupload
+				</label>
+				<input id="r-rejected" type="radio" class="input-filter input-radio mr-2" name="status" value="rejected">
+				<label for="r-rejected" class="mr-3 label-radio">
+					Ditolak
 				</label>
 			</div>
 			<div class="table-responsive">
@@ -38,3 +42,21 @@
 		</div>
 	</div>
 </div>
+
+<template id="form-ditolak">
+	<div class="form-group">
+		<label>Nomor Surat Tolak</label>
+		<input id="nomor_surat_tolak" name="nomor_surat_tolak" type="text" class="form-control">
+	</div>
+	<div class="form-group">
+		<label>Alasan</label>
+		<textarea id="alasan_ditolak" name="alasan_ditolak" class="form-control"></textarea>
+	</div>
+</template>
+
+<template id="form-upload">
+	<div class="form-group">
+		<label>Upload File</label>
+		<input type="file" name="upload" id="upload" class="form-control" style="height: 45px;" accept=".pdf">
+	</div>
+</template>

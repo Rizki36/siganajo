@@ -167,21 +167,21 @@
 					// 
 					[
 						'link' => base_url('balasan/perpanjangan-penahanan?s=unread'),
-						'count' => 1,
+						'count' => $balasan['perpanjangan']['unread'],
 						'title' => 'Perpanjangan Penahanan',
 						'text_class_color' => 'text-warning',
 						'desc' => 'Belum Dibalas'
 					],
 					[
 						'link' => base_url('balasan/perpanjangan-penahanan?s=accepted'),
-						'count' => 1,
+						'count' => $balasan['perpanjangan']['accepted'],
 						'title' => 'Perpanjangan Penahanan',
 						'text_class_color' => 'text-success',
 						'desc' => 'Diterima'
 					],
 					[
 						'link' => base_url('balasan/perpanjangan-penahanan?s=rejected'),
-						'count' => 1,
+						'count' => $balasan['perpanjangan']['rejected'],
 						'title' => 'Perpanjangan Penahanan',
 						'text_class_color' => 'text-danger',
 						'desc' => 'Ditolak'

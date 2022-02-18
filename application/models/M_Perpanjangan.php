@@ -14,14 +14,57 @@ class M_Perpanjangan extends MY_Model
 	}
 
 	/**
-	 * get_count_read
-	 *
+	 * for admin
 	 * @param bool $is_dibaca
 	 * @return int
 	 */
 	public function get_count_read($is_dibaca)
 	{
 		return $this->getOne('count(id_perpanjangan) as jml', ['is_dibaca' => $is_dibaca ? 1 : 0])->jml ?? 0;
+	}
+
+	/**
+	 * @param string $user_id
+	 * @return int
+	 */
+	public function count_read($user_id)
+	{
+		return $this->getOne('count(id_perpanjangan) as jml', [
+			'is_dibaca' =>  1,
+			'user_id' => $user_id
+		])->jml ?? 0;
+	}
+
+	/**
+	 * @param string $user_id
+	 * @return int
+	 */
+	public function count_unread($user_id)
+	{
+		return $this->getOne('count(id_perpanjangan) as jml', [
+			'is_dibaca' =>  0,
+			'user_id' => $user_id
+		])->jml ?? 0;
+	}
+
+	/**
+	 * @param string $user_id
+	 * @return int
+	 */
+	public function count_rejected($user_id)
+	{
+		$where = "alasan_ditolak IS NOT NULL AND user_id = '$user_id' AND is_dibaca_user = 0";
+		return $this->getOne('count(id_perpanjangan) as jml', $where)->jml ?? 0;
+	}
+
+	/**
+	 * @param string $user_id
+	 * @return int
+	 */
+	public function count_accepted($user_id)
+	{
+		$where = "upload IS NOT NULL AND user_id = '$user_id' AND is_dibaca_user = 0";
+		return $this->getOne('count(id_perpanjangan) as jml', $where)->jml ?? 0;
 	}
 
 	public static function get_label($key)
@@ -137,6 +180,11 @@ class Perpanjangan_DTO
 	public $files_json;
 	public $created_at;
 	public $is_dibaca;
+	public $is_dibaca_user;
+
+	public $alasan_ditolak;
+	public $nomor_surat_tolak;
+	public $upload;
 
 	public function __construct($data)
 	{
@@ -168,5 +216,10 @@ class Perpanjangan_DTO
 		$this->created_at = @$data->created_at;
 		$this->created_at_text = date('d-m-Y', strtotime(@$data->created_at));
 		$this->is_dibaca = (int)@$data->is_dibaca === 1;
+		$this->is_dibaca_user = (int)@$data->is_dibaca_user === 1;
+
+		$this->alasan_ditolak = $data->alasan_ditolak;
+		$this->nomor_surat_tolak = $data->nomor_surat_tolak;
+		$this->upload = $data->upload;
 	}
 }
