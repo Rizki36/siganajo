@@ -21,6 +21,19 @@
 				<label for="r-rejected" class="mr-3 label-radio">
 					Ditolak
 				</label>
+
+				<input id="u-all" type="radio" class="input-filter input-radio mr-2" name="status_user" value="">
+				<label for="u-all" class="mr-3 label-radio ml-5">
+					Semua
+				</label>
+				<input id="u-unread" type="radio" class="input-filter input-radio mr-2" name="status_user" value="unread" checked>
+				<label for="u-unread" class="mr-3 label-radio">
+					Belum Dibaca
+				</label>
+				<input id="u-read" type="radio" class="input-filter input-radio mr-2" name="status_user" value="read">
+				<label for="u-read" class="mr-3 label-radio">
+					Sudah Dibaca
+				</label>
 			</div>
 			<div class="table-responsive">
 				<table id="datatable" class="table">

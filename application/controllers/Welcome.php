@@ -17,6 +17,10 @@ class welcome extends CI_Controller
 		$m_penyitaan = new M_Penyitaan();
 		$id = @$_SESSION['user_id'];
 
+		$penyitaan_unread = $m_penyitaan->count_unread($id);
+		$penyitaan_accepted = $m_penyitaan->count_accepted($id);
+		$penyitaan_rejected = $m_penyitaan->count_rejected($id);
+
 		$this->load->view('layout', [
 			'main' => $this->load->view(
 				'v_welcome',
@@ -40,11 +44,12 @@ class welcome extends CI_Controller
 					],
 					'balasan' => [
 						'penyitaan' => [
-							'unread' => $m_penyitaan->count_unread($id),
-							'accepted' => $m_penyitaan->count_accepted($id),
-							'rejected' => $m_penyitaan->count_rejected($id),
+							'unread' => $penyitaan_unread,
+							'accepted' => $penyitaan_accepted,
+							'rejected' => $penyitaan_rejected,
 						]
 					],
+					'jumlah_balasan' => ($penyitaan_accepted + $penyitaan_rejected),
 					'quotes' => $m_setting->getByKey('quotes'),
 					'link_tutorial_yt' => $m_setting->getByKey('quotes'),
 					'marquee' => $m_setting->getByKey('marquee'),

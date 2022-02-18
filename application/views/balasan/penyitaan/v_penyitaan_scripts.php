@@ -20,6 +20,7 @@
 			"type": "POST",
 			"data": function(d) {
 				d.status = $("input[name='status']:checked").val();
+				d.status_user = $("input[name='status_user']:checked").val();
 			}
 		},
 		columns: [
@@ -46,7 +47,9 @@
 				data: 'jenis_permohonan'
 			},
 			{
-				data: 'aksi'
+				data: 'aksi',
+				sortable: false,
+				classname: "text-center"
 			},
 		],
 	});
@@ -84,5 +87,31 @@
 				},
 			})
 		}).fail(e => common_error(e))
+	}
+
+	function mark_read(id, is_read) {
+		Swal.fire({
+			icon: 'info',
+			title: 'Apakah Anda Yakin ?',
+			text: '',
+			confirmButtonText: 'Ya',
+			cancelButtonText: 'Tidak',
+			showCancelButton: true
+		}).then(function(result) {
+			if (result.value) {
+				$.ajax({
+					type: "POST",
+					url: "<?= base_url('balasan/penyitaan/mark_read') ?>",
+					data: {
+						id,
+						is_read
+					},
+					dataType: "json",
+
+				}).then(res => {
+					$datatable.ajax.reload()
+				}).fail(e => common_error(e))
+			}
+		})
 	}
 </script>

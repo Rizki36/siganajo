@@ -49,7 +49,14 @@
     					<!-- end of dropdown menu -->
 
     					<li class="nav-item">
-    						<a class="nav-link page-scroll" href="#balasan">Balasan</a>
+    						<a class="nav-link page-scroll" href="#balasan">Balasan
+    							<?php if (isset($jumlah_balasan)) : ?>
+    								<span style="position: relative;">
+    									<i class="fa fa-bell"></i>
+    									<span style="position: absolute;top: -8px;right: -8px;" class="badge badge-primary"><?= $jumlah_balasan ?></span>
+    								</span>
+    							<?php endif ?>
+    						</a>
     					</li>
 
     					<li class="nav-item">

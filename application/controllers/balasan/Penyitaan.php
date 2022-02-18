@@ -60,6 +60,9 @@ class penyitaan extends CI_Controller
 		if ($_POST['status'] === 'accepted') $configData['filters'][] = "upload IS NOT NULL";
 		if ($_POST['status'] === 'rejected') $configData['filters'][] = "alasan_ditolak IS NOT NULL";
 
+		if ($_POST['status_user'] === 'read') $configData['filters'][] = ['is_dibaca_user' => 1];
+		if ($_POST['status_user'] === 'unread') $configData['filters'][] = ['is_dibaca_user' => 0];
+
 
 		## group by
 		// $configData['group_by'] = 'awb_no';
@@ -128,6 +131,12 @@ class penyitaan extends CI_Controller
 				if ($penyitaan->upload != '') {
 					$temp['aksi'] .= "<a style='text-decoration: none;' href='" . base_url(MyFiles::$penyitaan . '/' . $penyitaan->upload) . "' class='btn btn-block btn-sm btn-primary'>Detail Upload</a>";
 				}
+
+				if ($penyitaan->is_dibaca_user) {
+					$temp['aksi'] .= "<button onclick='mark_read($penyitaan->id_penyitaan,0)' class='btn btn-block btn-sm btn-primary'>Tandai <br> Belum Dibaca</button>";
+				} else {
+					$temp['aksi'] .= "<button onclick='mark_read($penyitaan->id_penyitaan,1)' class='btn btn-block btn-sm btn-primary'>Tandai <br> Sudah Dibaca</button>";
+				}
 			} else {
 			}
 
@@ -155,5 +164,22 @@ class penyitaan extends CI_Controller
 			'msg' => 'Aksi berhasil',
 			'data' => $data
 		]);
+	}
+
+	public function mark_read()
+	{
+		$m_penyitaan = new M_Penyitaan();
+		$id = filter_xss($_POST['id']);
+		$is_read = (int)filter_xss($_POST['is_read']);
+
+		$res = $m_penyitaan->update([
+			'is_dibaca_user' => $is_read
+		], [
+			'id_penyitaan' => $id,
+			'user_id' => $_SESSION['user_id']
+		]);
+
+		if (!$res) setresponse(400, []);
+		setresponse(200, []);
 	}
 }
